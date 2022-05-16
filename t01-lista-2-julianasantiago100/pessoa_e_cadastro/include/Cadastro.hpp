@@ -2,7 +2,7 @@
 #define Cadastro_hpp
 #include <vector>
 #include <iostream>
-
+#include <fstream>
 #include "Pessoa.hpp"
 
 /**
@@ -45,5 +45,6 @@ class Cadastro{
          */
         void limpaCadastro();
 
+        void apaga_cpfs(std::vector<Pessoa *> nomes);
 };
 #endif // Cadastro_hpp
