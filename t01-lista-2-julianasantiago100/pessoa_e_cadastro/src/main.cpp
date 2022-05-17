@@ -79,6 +79,8 @@ int main(){
     defaultPessoa = new Pessoa("Cadastro Municipal","XXX.XXX.XXX-XX");
     vector_CM.push_back(defaultPessoa);
 
+    int flag_Entrada_Pessoas = 0;
+
     for(long unsigned int i = 0; i < cpfs_cadastro.size();i++){
         found = cpfs_cadastro[i].find(" ");
         if(found != std::string::npos){
@@ -88,25 +90,39 @@ int main(){
             }
             cpf = cpfs_cadastro[i].substr(0,14); //exatamente o CPF: XXX.XXX.XXX
             p1 = cadastro_unico->encontraPessoa(cpf); //1- Eu busco o NOME da pessoa no cadastro único, isso por meio do seu cpf
-            if(p1!= nullptr){
+            flag_Entrada_Pessoas++;
+            //if(p1!= nullptr){
                 if(cadastro.compare("CM")==0){ //é o cadastro municipal
-                    CM->adicionaPessoa(p1);
+                    if(p1!= nullptr){
+                        CM->adicionaPessoa(p1);
+                    }else { 
+                        p1 = new Pessoa("Ninguém Cadastrado","");
+                    }
                   //std::cout <<ANSI_COLOR_GREEN << "Adicionando pessoa!!😄" << RESET << std::endl;
                     vector_CM.push_back(p1);
                 }else if(cadastro.compare("SUS")==0){//é o cadastro no Sistema Único de Saúde
-                    SUS->adicionaPessoa(p1);
+                    if(p1!= nullptr){
+                        SUS->adicionaPessoa(p1);
+                    }else{
+                        p1 = new Pessoa("Ninguém Cadastrado","");
+                    }
                   //  std::cout << ANSI_COLOR_GREEN << "Adicionando pessoa!!😄" << RESET << std::endl;
                     vector_SUS.push_back(p1);
                 }else if(cadastro.compare("CE")==0){
-                    CE->adicionaPessoa(p1);
+                    if(p1!= nullptr){
+                        CE->adicionaPessoa(p1);
+                    }else{
+                        p1 = new Pessoa("Ninguém Cadastrado","");
+                    }
                   //  std::cout << ANSI_COLOR_GREEN << "Adicionando pessoa!!😄" << RESET << std::endl;
                     vector_CE.push_back(p1);
                 }else{
                     std::cout << ANSI_COLOR_RED << "Esse cadastro não existe em nossos sistemas..." << RESET << std::endl;
                 }
-            }else{
-                std::cout << BACKGROUND_WHITE << ANSI_COLOR_MAGENTA << "Ninguém cadastrado!" << RESET << std::endl;
-            }
+           // }else{
+               // flag_ninguem = flag_Entrada_Pessoas;
+                //std::cout << BACKGROUND_WHITE << ANSI_COLOR_MAGENTA << "Ninguém cadastrado!" << RESET << std::endl;
+           // }
             
         }
     }
@@ -137,6 +153,9 @@ int main(){
     CM->limpaCadastro();
     CE->limpaCadastro();
     SUS->limpaCadastro();
+    vector_CM.clear();
+    vector_CE.clear();
+    vector_SUS.clear();
     delete CM;
     delete CE;
     delete SUS;
@@ -144,6 +163,7 @@ int main(){
     //depois ele apaga todas as instancias TODAS DE UMA VEZ pelo cadastro_unico. 
     //por último, apaga a referencia caadastro_unico
     cadastro_unico->apaga_cadastrados();
+    cadastro_unico->limpaCadastro();
     delete cadastro_unico;
     return EXIT_SUCCESS;
 }   
