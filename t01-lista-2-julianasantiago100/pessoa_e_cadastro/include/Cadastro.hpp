@@ -45,6 +45,7 @@ class Cadastro{
          */
         void limpaCadastro();
 
-        void apaga_cpfs(std::vector<Pessoa *> nomes);
+        //Função adicionada 
+        void apaga_cadastrados();
 };
 #endif // Cadastro_hpp

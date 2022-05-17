@@ -12,25 +12,22 @@
 #define RESET "\u001b[0m"
 #define BACKGROUND_WHITE "\u001b[47;1m"
 
-std::vector<Pessoa *> inicializar_cadastro_unico(Cadastro *cadastro_unico){
-    std::vector<Pessoa *> vetor;
+void inicializar_cadastro_unico(Cadastro *cadastro_unico){
     std::ifstream arquivo("../data/CadastroUnico.txt");
     std::string linha;
     Pessoa *p;
     std::pair<std::string, std::string> nome_e_cpf;
     int i  = 0;
     while(std::getline(arquivo,linha)){
-        if(i%3==0){ // 3*i == 0
+        if(i%3==0){ // 3q
             nome_e_cpf.first = linha;
-            //linha.erase(linha.end());
-        }else if(i%3==1){ //3*i+1 == i
+        }else if(i%3==1){ //3*q+1
             nome_e_cpf.second = linha;
             nome_e_cpf.second = linha.substr(0,linha.size()-1); //para apagar o \n do final
-        }else if(i%3==2){ //3*i +2  == i
+        }else if(i%3==2){ //3*q +2
             p = new Pessoa(nome_e_cpf.first,nome_e_cpf.second);
             p->setEndereco(linha);
             cadastro_unico->adicionaPessoa(p);
-            vetor.push_back(p);
         }else{
             break;
         }
@@ -39,14 +36,12 @@ std::vector<Pessoa *> inicializar_cadastro_unico(Cadastro *cadastro_unico){
     arquivo.close();
     p = new Pessoa("",""); //apenas para apagar a variável p, se eu deletasse sem isso, a variável iria apagar a última pessoa adicionada no vector. Pois essa variável é um ponteiro.
     delete p;
-    return vetor;
 }   
 
 int main(){
-    //TODO: seu programa
     //std::cout << "Bem vindo ao programa de cadastros!! Cadastre abaixe os CPF´s desejados!" << std::endl;
     Cadastro *cadastro_unico = new Cadastro("Cadastro Único");
-    std::vector<Pessoa *> vector_cadastro_unico =  inicializar_cadastro_unico(cadastro_unico); //iniciliza o cadastro e adiciona as informações na classe
+    inicializar_cadastro_unico(cadastro_unico); //iniciliza o cadastro e adiciona as informações na classe
 
     Cadastro *SUS = new Cadastro("Sistema Único de Saúde");
 
@@ -88,7 +83,9 @@ int main(){
         found = cpfs_cadastro[i].find(" ");
         if(found != std::string::npos){
             cadastro = cpfs_cadastro[i].substr(found+1);
-         //   std::cout << "Cadastro: " << cadastro << std::endl;
+            if(cadastro[0]=='C' && cadastro.size()==3){
+                cadastro.erase(cadastro.size()-1);
+            }
             cpf = cpfs_cadastro[i].substr(0,14); //exatamente o CPF: XXX.XXX.XXX
             p1 = cadastro_unico->encontraPessoa(cpf); //1- Eu busco o NOME da pessoa no cadastro único, isso por meio do seu cpf
             if(p1!= nullptr){
@@ -134,13 +131,19 @@ int main(){
         std::cout << std::endl;
     }
 
-    //apagando os dinâmicos
-    //cadastro_unico->apaga_cpfs(vector_cadastro_unico);
-    CE->apaga_cpfs(vector_CE);
-    CM->apaga_cpfs(vector_CM);
-    SUS->apaga_cpfs(vector_SUS);
-
+    
+    //limpo os meus members vetores-variáveis de cadastro, e depois  deleto todos os objetos através de apenas uma gama de referências, a que tem todas, no cadastro_unico 
+    //depois, eu deleto as variáveis de acesso, os ponteiros da classe Cadastro;]
+    CM->limpaCadastro();
+    CE->limpaCadastro();
+    SUS->limpaCadastro();
+    delete CM;
+    delete CE;
+    delete SUS;
+    //primeiro ele limpa os vetores e depois apaga as referencias CM,CE e SUS
+    //depois ele apaga todas as instancias TODAS DE UMA VEZ pelo cadastro_unico. 
+    //por último, apaga a referencia caadastro_unico
+    cadastro_unico->apaga_cadastrados();
     delete cadastro_unico;
-    ///
     return EXIT_SUCCESS;
 }   

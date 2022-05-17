@@ -46,15 +46,8 @@ void Cadastro::limpaCadastro(){
     m_cadastrados.clear();
 }
 
-void Cadastro::apaga_cpfs(std::vector<Pessoa *> nomes){
-    Pessoa *p;
-    for(long unsigned int i = 1; i < nomes.size();i++){ //sem o default
-        Pessoa *p = removePessoa(nomes[i]->getCPF());
-        if(p != nullptr){
-            delete p;
-        }else{} //condicional de erro, caso queira desenvolver
+void Cadastro::apaga_cadastrados(){
+    for(auto a : m_cadastrados){
+        delete a;
     }
-    p = new Pessoa("","");
-    delete p;
-   // return true;
 }
