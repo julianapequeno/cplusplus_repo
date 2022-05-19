@@ -28,8 +28,7 @@ int main(){
 
     //getline(cin,entrada_lado) && getline(cin,areas) && getline(cin,ocupacao)
 
-    while(true){
-        getline(cin,entrada_dinamica);
+    while(getline(cin,entrada_dinamica)){
         if(entrada_dinamica.size() > 0){
             if(i%3==0){ //PRIMEIRA LINHA -> LADO DA RUA EM QUE A CASA ESTÁ
                 entrada_lado = entrada_dinamica;
@@ -78,20 +77,38 @@ int main(){
             //vizinhos
             std::cout << "Vizinhos" << std::endl;
             std::tuple<Casa*, Casa*,Casa*> vizinhos_rua = Rua_dados->vizinhos(vetor_desocupadas[i]->getNumero());
+            std::string endereco_dinamico;
             if(std::get<2>(vizinhos_rua) != nullptr){
                // std::cout << "NÚMERO DA CASA DA FRENTE: " << get<2>(vizinhos_rua)->getNumero() << std::endl;
-                std::string endereco_frente = Rua_dados->endereco(get<2>(vizinhos_rua)->getNumero());
-                std::cout << "Frente: " << endereco_frente << std::endl;
+                endereco_dinamico = Rua_dados->endereco(get<2>(vizinhos_rua)->getNumero());
+                if(get<2>(vizinhos_rua)->isOcupada() == false){
+                  endereco_dinamico = endereco_dinamico + " (desocupada)";
+                }else{
+                  endereco_dinamico = endereco_dinamico + " (ocupada)";
+                }
+                std::cout << "Frente: " << endereco_dinamico << std::endl;
             }else{
                 std::cout << "Frente: <nenhum>" << std::endl;
             }
             if(std::get<0>(vizinhos_rua) != nullptr){
-                std::cout << "Esquerda: " << Rua_dados->endereco(std::get<0>(vizinhos_rua)->getNumero()) << std::endl;
+                endereco_dinamico = Rua_dados->endereco(std::get<0>(vizinhos_rua)->getNumero());
+                if(get<0>(vizinhos_rua)->isOcupada() == false){
+                  endereco_dinamico = endereco_dinamico + " (desocupada)";
+                }else{
+                 endereco_dinamico = endereco_dinamico + " (ocupada)";
+                }
+                std::cout << "Esquerda: " << endereco_dinamico << std::endl;
             }else{
                 std::cout << "Esquerda: <nenhum>" << std::endl;
             }
             if(std::get<1>(vizinhos_rua) != nullptr){
-                std::cout << "Direita: " << Rua_dados->endereco(std::get<1>(vizinhos_rua)->getNumero()) << std::endl;
+              endereco_dinamico = Rua_dados->endereco(std::get<1>(vizinhos_rua)->getNumero());
+                if(get<1>(vizinhos_rua)->isOcupada() == false){
+                  endereco_dinamico = endereco_dinamico + " (desocupada)";
+                }else{
+                  endereco_dinamico = endereco_dinamico + " (ocupada)";
+                }
+                std::cout << "Direita: " << endereco_dinamico << std::endl;
             }else{
                 std::cout << "Direita: <nenhum>" << std::endl;
             }

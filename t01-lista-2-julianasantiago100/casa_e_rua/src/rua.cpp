@@ -205,14 +205,15 @@ std::string rua::endereco(int num){ //o endereço no formato:<nome_rua>, Cep: <c
             string area = ", ";
             string lado = ", lado ";
             string ponto = ".";
-            string occuped;
+            //string occuped;
+          /*
             if(a->isOcupada()==true){
                 occuped = " (ocupada)";
             }else{
-                occuped = "";
-            }
+                occuped = " (desocupada)";
+            } */
             //ESTÁ NO LADO A
-            return  this->m_nome + cep_r + this->m_CEP + no + std::to_string(a->getNumero()) + area + a->toString() + lado + lado_a + occuped;
+            return  this->m_nome + cep_r + this->m_CEP + no + std::to_string(a->getNumero()) + area + a->toString() + lado + lado_a;
             break;
         }
     }
@@ -228,13 +229,14 @@ std::string rua::endereco(int num){ //o endereço no formato:<nome_rua>, Cep: <c
                 string virgula = ", ";
                 string lado_escrito = ", lado ";
                 //ESTÁ NO LADO A
-                string occuped;
+                //string occuped;
+              /*
                 if(bb->isOcupada()==true){
                     occuped = " (ocupada)";
                 }else{
-                    occuped = "";
-                }
-                return  this->m_nome + cep_b += this->m_CEP + numero + std::to_string(bb->getNumero()) + virgula + bb->toString() + lado_escrito + lado_b + occuped;
+                    occuped = " (desocupada)";
+                }*/
+                return  this->m_nome + cep_b += this->m_CEP + numero + std::to_string(bb->getNumero()) + virgula + bb->toString() + lado_escrito + lado_b;
                 break;
             }
         }
