@@ -1,4 +1,0 @@
-/mnt/c/Users/DELL/Documents/UNIVERSITY/3 SEMESTRE (2022.1)/Linguagem de Programação/cplusplus/t01-lista-2-julianasantiago100/pessoa_e_cadastro/build/CMakeFiles/rebuild_cache.dir
-/mnt/c/Users/DELL/Documents/UNIVERSITY/3 SEMESTRE (2022.1)/Linguagem de Programação/cplusplus/t01-lista-2-julianasantiago100/pessoa_e_cadastro/build/CMakeFiles/edit_cache.dir
-/mnt/c/Users/DELL/Documents/UNIVERSITY/3 SEMESTRE (2022.1)/Linguagem de Programação/cplusplus/t01-lista-2-julianasantiago100/pessoa_e_cadastro/build/CMakeFiles/verify.dir
-/mnt/c/Users/DELL/Documents/UNIVERSITY/3 SEMESTRE (2022.1)/Linguagem de Programação/cplusplus/t01-lista-2-julianasantiago100/pessoa_e_cadastro/build/CMakeFiles/program.dir
