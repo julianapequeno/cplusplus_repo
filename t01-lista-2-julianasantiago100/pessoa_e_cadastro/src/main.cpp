@@ -133,17 +133,29 @@ int main(){
             std::cout << vector_SUS[i]->getNome() << std::endl;
         }
         std::cout << std::endl;
+    }else{
+        std::cout << vector_SUS[0]->getNome() << std::endl;
+        std::cout << "Ninguém Cadastrado" << std::endl;
     }
+  
     if(vector_CE.size()>1){
         for(long unsigned int i  = 0; i < vector_CE.size(); i++){
             std::cout << vector_CE[i]->getNome() << std::endl;
         }
+        std::cout << std::endl;
+    }else{
+        std::cout << vector_CE[0]->getNome() << std::endl;
+        std::cout << "Ninguém Cadastrado" << std::endl;
         std::cout << std::endl;
     }
     if(vector_CM.size()>1){
         for(long unsigned int i = 0; i < vector_CM.size(); i++){
             std::cout << vector_CM[i]->getNome() << std::endl;
         }
+        std::cout << std::endl;
+    }else{
+        std::cout << vector_CM[0]->getNome() << std::endl;
+        std::cout << "Ninguém Cadastrado" << std::endl;
         std::cout << std::endl;
     }
 
