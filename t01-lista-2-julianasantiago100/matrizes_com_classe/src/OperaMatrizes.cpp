@@ -29,7 +29,3 @@ void OperaMatrizes::function_add(){
     }
     this->set_resultado_conta(m_add.second); //<! Puxa o resultado para a soma final no resultado_conta
 }
-void OperaMatrizes::deleta_referencias_m_add(){
-    delete this->m_add.first;
-    delete this->m_add.second;
-}
