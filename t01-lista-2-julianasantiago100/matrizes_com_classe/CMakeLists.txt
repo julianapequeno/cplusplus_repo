@@ -22,7 +22,8 @@ set ( EXEC_NAME "program")
 # Cria um executável com nome "run_tests", adiciona neste executável os arquivos do test manager e o seu main.cpp
 add_executable( ${EXEC_NAME}
                 src/main.cpp
-                src/Matriz.cpp )
+                src/Matriz.cpp 
+                src/OperaMatrizes.cpp)
 
 # define C++14 standard
 set_property(TARGET ${EXEC_NAME} PROPERTY CXX_STANDARD 14)

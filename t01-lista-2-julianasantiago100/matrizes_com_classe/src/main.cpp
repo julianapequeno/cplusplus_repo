@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "Matriz.hpp"
+#include "OperaMatrizes.hpp"
 
 using namespace std;
 
@@ -56,15 +57,17 @@ int main ( void ){
     //IDEIA: fazer um do_while e em cada início eu crio uma nova instância para matriz 
 
     /*Criação das variáveis locais que serão usadas para o controle e a manipulação do programa */
-    Matriz * matrix; //<! um objeto do tipo Matriz
+    Matriz * matrix; //<! uma referência a um objeto do tipo Matriz
+    OperaMatrizes * operacao = new OperaMatrizes(); //<! uma instância (objeto) e sua referência do tipo OperaMatrizes
     string linha_leitura_matriz; //<! linha_leitura_matriz recebe a linha lida dinamicamente
     int linhas, colunas; //<! número de linhas e colunas da matriz
     std::vector<string> minha_linha; //<! vetor com a minha linha atual de forma segmentada
+    string operacao_atual; //<! Para manter em aberto a operação sendo realizada entre duas matrizes
 
+    int i_add = 0;
     getline(cin,linha_leitura_matriz); //getline inicial
     do{ 
-        matrix = new Matriz(); //<! crio uma nova instância da classe Matriz
-        std::cout << "Criei uma nova matriz!" << std::endl;
+        //std::cout << "Criei uma nova matriz!" << std::endl;
         /*Conferindo se o dado é uma matriz ou uma operaçãoS */
         string token;//
         std::vector<string> linha_dinamica;//
@@ -79,6 +82,7 @@ int main ( void ){
                         std::cout << "OPA! TEM!" << std::endl;//
                         }*/
         if(!eh_operacao){
+            matrix = new Matriz(); //<! crio uma nova instância (objeto) da classe Matriz
             /* Recebimento dos dados de informação geral (nome, linha e coluna) via terminal*/
             auto a = matriz_informacoes_iniciais(linha_leitura_matriz);
             matrix->set_nome(get<2>(a));
@@ -99,16 +103,18 @@ int main ( void ){
                 while(tokenizer2 >> token){
                     minha_linha.push_back(token);
                 }
-                std::cout << "Adicionando na linha" << std::endl;
-                std::cout << "Esse é o tamanho das colunas: " << colunas << " e esse é o tamanho do vector minha linha: " << minha_linha.size() << std::endl;
+               // std::cout << "Adicionando na linha" << std::endl;
+                //std::cout << "Esse é o tamanho das colunas: " << colunas << " e esse é o tamanho do vector minha linha: " << minha_linha.size() << std::endl;
+                int meu_numero;
                 /*Mudança de string para int e atribuição aos atributos do objeto da classe Matriz*/
                 for(int y = 0; y < minha_linha.size(); y++){
-                    std::cout << i << " Entrando..." << std::endl;
-                    matrix->set_vetor_matriz(i,stoi(minha_linha[y])); //Segmentation Fault
+                    //std::cout << i << " Entrando..." << std::endl;
+                    meu_numero = stoi(minha_linha[y]);
+                    matrix->set_vetor_matriz(i,meu_numero); //Segmentation Fault
                 }
-                std::cout << "Coloquei no objeto!" << std::endl;
+                //std::cout << "Coloquei no objeto!" << std::endl;
                 minha_linha.clear(); //apago do meu vetor de linha dinâmico os dados da minha linha atual
-                std::cout << "Limpei para o próximo!!"<< std::endl;
+                //std::cout << "Limpei para o próximo!!"<< std::endl;
             }
             vetor_matrizes.push_back(matrix); //<!Adiciono a referência da instância a classe Matriz ao vetor de referência das matrizes
         }else{
@@ -124,14 +130,32 @@ int main ( void ){
             while(tokenizer >> token){
                 minha_linha.push_back(token);
             }
-            minha_conta = minha_conta + minha_linha[0] + " "; //<! Adiciono na minha string da conta 
-
-
+            if(minha_linha.size()==1){
+                minha_conta = minha_conta + minha_linha[0] + " " ; //<! Adiciono mais uma operação a string
+            }else{
+                minha_conta = minha_conta + minha_linha[0] + " " + minha_linha[1]; //<! Adiciono na minha string da conta a operação mue (ela recebe um parâmetro númérico que também aparece na conta)
+            }
+            
+            /*Início das operações*/
             if(minha_linha[0].compare("mue")==0){
                 int valor_multiplicador = stoi(minha_linha[1]);
-                /*Multiplicar a matriz por valor_multiplicador -> Chamar a classe de OperaMatrizes*/
+                //std::cout << "Esse é o meu matrix: " << matrix->get_nome() << std::endl;
+                operacao->function_mue(valor_multiplicador,matrix); /*Referencia a última matrix criada! Perfeito!*/
+                operacao->set_resultado_conta(matrix); /* FEITO!! OKAY!! Multiplicar a matriz por valor_multiplicador -> Chamar a classe de OperaMatrizes*/
             } 
-            if(minha_linha[0].compare("add")==0){
+            if(minha_linha[0].compare("add")==0 || operacao_atual.compare("add")==0){
+                std::cout << "Esse é o meu matrix: " << matrix->get_nome() << std::endl;
+                if(i_add%2==0){ //PAR, 'PRIMEIRO'
+                    operacao_atual = minha_linha[0];
+                    operacao->set_adicao(matrix,true);
+                    i_add++;
+                }else if(i_add%2==1){
+                    operacao->set_adicao(matrix,false);
+                    operacao->function_add();
+                    i_add = 0; //*Reseta o quantificador de matrizes para a adição
+                    operacao_atual = " "; //* Reseta a operação atual quando entra a segunda matriz
+                }
+
                 /*Preparar para receber outra matriz e seus dados*/
                 /* Depois, enviar as duas para a operação de adição -> Chamar a classe de OperaMatrizes */
             } /* Deve existir uma espécie de somador para, para contabilizar essas contas e exibir um resultado final*/
@@ -143,11 +167,15 @@ int main ( void ){
                 /*Preparar para receber outra matriz e seus dados*/
                 /* Depois, enviar as duas para a operação de Multiplicação elemento à elemento -> Chamar a classe de OperaMatrizes */
             }
-
+            minha_linha.clear();
         }
     }while(!getline(cin,linha_leitura_matriz).eof());
-    
-        std::cout << minha_conta << std::endl;
+        std::cout << "Meu cálculo: " << minha_conta << std::endl;
+        for(int i = 0; i < 2; i++){
+            for(int y = 0; y < 2; y++){
+                std::cout << vetor_matrizes[0]->get_valor_matriz(i,y) << std::endl;
+            }
+        }
     //getline(cin,linha_leitura_matriz);  depois do -> /*Conferindo se o dado é uma matriz ou uma operaçãoS */
     
         /*
@@ -173,5 +201,5 @@ int main ( void ){
 
     /*Apagando qualquer possibilidade de vazamento de memória */
     // linha_dinamica.clear();
-    //IDEIA_LEMBRAR! KILL TODOS OS Matriz* do vetor_matrizes!!!
+    //IDEIA_LEMBRAR! KILL TODOS OS Matriz* do vetor_matrizes!!! ATÉ NAS CLASSES!!
 }

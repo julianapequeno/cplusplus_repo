@@ -17,6 +17,18 @@ void Matriz::set_linhas_e_colunas(int L, int M){
 }
 
 void Matriz::set_vetor_matriz(int i, int n){
-    this->m_vetor_matriz[i].resize(1);
+    this->m_vetor_matriz.resize(this->m_vetor_matriz.size()+1);
     this->m_vetor_matriz[i].push_back(n); 
 }   
+
+int Matriz::get_valor_matriz(int l, int c){
+    return this->m_vetor_matriz[l][c];
+}
+
+void Matriz::set_vetor_matriz_lugar_especificado(int L, int C, int n){
+    this->m_vetor_matriz[L][C] = n;
+}
+
+std::pair<int,int> Matriz::get_linhas_e_colunas(){
+    return this->m_linhas_e_colunas;
+}
