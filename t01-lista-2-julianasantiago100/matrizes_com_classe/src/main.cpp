@@ -61,7 +61,7 @@ int main ( void ){
     OperaMatrizes * operacao = new OperaMatrizes(); //<! uma instância (objeto) e sua referência do tipo OperaMatrizes
     string linha_leitura_matriz; //<! linha_leitura_matriz recebe a linha lida dinamicamente
     int linhas, colunas; //<! número de linhas e colunas da matriz
-    std::vector<string> minha_linha; //<! vetor com a minha linha atual de forma segmentada
+    std::vector<string> minha_linha, minha_operacao; //<! vetores com a minha linha atual de forma segmentada
     string operacao_atual; //<! Para manter em aberto a operação sendo realizada entre duas matrizes
 
     int i_add = 0; //LEMBRAR, LEMBRAR -> NAS OUTRAS FUNÇÕES COLOQUE O FALTA_UM TAMBÉM!!
@@ -112,7 +112,7 @@ int main ( void ){
                 for(int y = 0; y < minha_linha.size(); y++){
                     //std::cout << i << " Entrando..." << std::endl;
                     meu_numero = stoi(minha_linha[y]);
-                    matrix->set_vetor_matriz(i,meu_numero); //Segmentation Fault
+                    matrix->set_vetor_matriz(i,meu_numero); 
                 }
                 //std::cout << "Coloquei no objeto!" << std::endl;
                 minha_linha.clear(); //apago do meu vetor de linha dinâmico os dados da minha linha atual
@@ -130,61 +130,86 @@ int main ( void ){
             **  Multiplicação elemento à elemento (mul) ou
             **  Multiplicação por escalar (mue)
             */
-
-            istringstream tokenizer { linha_leitura_matriz };
-            while(tokenizer >> token){
-                minha_linha.push_back(token);
-            }
-            if(minha_linha.size()==1){
-                minha_conta = minha_conta + minha_linha[0] + " " ; //<! Adiciono mais uma operação a string
-            }else{
-                minha_conta = minha_conta + minha_linha[0] + " " + minha_linha[1]; //<! Adiciono na minha string da conta a operação mue (ela recebe um parâmetro númérico que também aparece na conta)
+            if(!acabou_dois){
+                string token_operacao;
+                istringstream tokenizer_operacoes { linha_leitura_matriz };
+               // std::cout << "Linha de leitura atual: " << linha_leitura_matriz << std::endl;
+                while(tokenizer_operacoes >> token_operacao){
+                   //std::cout << "Token = " << token_operacao << std::endl;
+                    minha_operacao.push_back(token_operacao);
+                }
+              //  std::cout << "Minha linha -> " << minha_operacao[0] << " & " << minha_operacao[1]<< std::endl;
+                if(minha_operacao.size()==1){
+                    minha_conta = minha_conta + minha_operacao[0] + " " ; //<! Adiciono mais uma operação a string
+                }else{
+                    minha_conta = minha_conta + minha_operacao[0] + " " + minha_operacao[1] + " "; //<! Adiciono na minha string da conta a operação mue (ela recebe um parâmetro númérico que também aparece na conta)
+                }
             }
             
             /*Início das operações*/
-            if(minha_linha[0].compare("mue")==0){
-                std::cout << "Aqui!!"<< std::endl;
-                int valor_multiplicador = stoi(minha_linha[1]);
+            if(minha_operacao[0].compare("mue")==0){
+                int valor_multiplicador = stoi(minha_operacao[1]);
                 operacao->function_mue(valor_multiplicador,matrix); /*Referencia a última matrix criada! Perfeito!*/
                 operacao->set_resultado_conta(matrix); /* FEITO!! OKAY!! Multiplicar a matriz por valor_multiplicador -> Chamar a classe de OperaMatrizes*/
             } 
-            if(minha_linha[0].compare("add")==0 || operacao_atual.compare("add")==0){
+            if(minha_operacao[0].compare("add")==0 || operacao_atual.compare("add")==0){
                 if(i_add%2==0){ //2q + 0
                     //std::cout << "Meu vetor atual: " << matrix->get_nome() << std::endl;
-                    operacao_atual = minha_linha[0];
-                    operacao->set_adicao(matrix,true);
+                    operacao_atual = minha_operacao[0];
+                    operacao->set_par_matriz(matrix,true);
                     i_add++;
                     acabou_dois = true;
                 }else if(i_add%2==1){ //2q + 1
                     acabou_dois = false;
-                    std::cout << "Meu vetor atual: " << matrix->get_nome() << std::endl;
-                    operacao->set_adicao(matrix,false);
+                    entre = false;
+                    operacao->set_par_matriz(matrix,false);
                     operacao->function_add();
                     i_add++;
                    // i_add = 0; //*Reseta o quantificador de matrizes para a adição
                     operacao_atual = " "; //* Reseta a operação atual quando entra a segunda matriz
                 }
-
-                /*Preparar para receber outra matriz e seus dados*/
-                /* Depois, enviar as duas para a operação de adição -> Chamar a classe de OperaMatrizes */
-            } /* Deve existir uma espécie de somador para, para contabilizar essas contas e exibir um resultado final*/
-            if(minha_linha[0].compare("dot")==0){   
+            } 
+            if(minha_operacao[0].compare("dot")==0 || operacao_atual.compare("dot")==0){   
+                if(i_add%2==0){
+                    operacao_atual = minha_operacao[0];
+                    operacao->set_par_matriz(matrix,true);
+                    i_add++;
+                    acabou_dois = true;
+                }else if(i_add%2==1){
+                    acabou_dois = false;
+                    entre = false;
+                    operacao->set_par_matriz(matrix,false);
+                    operacao->function_dot();
+                    i_add++;
+                    operacao_atual = " "; //* Reseta a operação atual quando entra a segunda matriz
+                }
                 /*Preparar para receber outra matriz e seus dados*/
                 /* Depois, enviar as duas para a operação de Multiplicação matricial -> Chamar a classe de OperaMatrizes */
             }
-            if(minha_linha[0].compare("mul")==0){
+            if(minha_operacao[0].compare("mul")==0){
                 /*Preparar para receber outra matriz e seus dados*/
                 /* Depois, enviar as duas para a operação de Multiplicação elemento à elemento -> Chamar a classe de OperaMatrizes */
             }
-            minha_linha.clear();
+            minha_operacao.clear();
         }
     }while(!getline(cin,linha_leitura_matriz).eof());
-        std::cout << "Meu cálculo: " << minha_conta << std::endl;
+        minha_conta.erase(minha_conta.size()-1);
+        std::cout << "Resultado " << minha_conta << std::endl;
         for(int i = 0; i < vetor_matrizes[vetor_matrizes.size()-1]->get_linhas_e_colunas().first; i++){
             for(int y = 0; y < vetor_matrizes[vetor_matrizes.size()-1]->get_linhas_e_colunas().second; y++){
-                std::cout << vetor_matrizes[vetor_matrizes.size()-1]->get_valor_matriz(i,y) << std::endl;
+                if(y+1==vetor_matrizes[vetor_matrizes.size()-1]->get_linhas_e_colunas().second){
+                    std::cout << vetor_matrizes[vetor_matrizes.size()-1]->get_valor_matriz(i,y);
+                }else{
+                    std::cout << vetor_matrizes[vetor_matrizes.size()-1]->get_valor_matriz(i,y)<< " ";
+                }
             }
+            std::cout << std::endl;
         }
+        /*PERCEBA QUE O RESULTADO FINAL DE CADA PASSO ESTÁ DENTRO DA ÚLTIMA MATRIZ USADA
+        * NAQUELE PASSO. ASSIM, PROGRESSIVAMENTE...O RESULTADO FINAL ESTÁ DENTRO DA ÚLTIMA
+        * MATRIZ INSERIDA. ASSIM, SE TORNA DESNECESSÁRIO O MÉTODO DE 'SOMAR_RESULTADO' NA CLAS-
+        * SE OPERAMATRIZES.
+        */
     //getline(cin,linha_leitura_matriz);  depois do -> /*Conferindo se o dado é uma matriz ou uma operaçãoS */
     
         /*

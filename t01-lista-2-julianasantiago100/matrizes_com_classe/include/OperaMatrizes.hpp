@@ -28,7 +28,7 @@ class OperaMatrizes{
          * @param m, a matriz que será adicionada a conta da adição
          * @param b, um valor booleano o qual, sendo true -> é a primeira matriz da soma, sendo false -> é a segunda matriz da soma
          */
-        void set_adicao(Matriz *m,bool b); 
+        void set_par_matriz(Matriz *m,bool b); 
         /**
          * Função de Adição de Matrizes
          * Como a adição neste projeto apenas é realizada de duas em duas matrizes, guarda-
@@ -40,6 +40,15 @@ class OperaMatrizes{
          * @param m, a referência para a matriz a qual será aplicada a multiplicação por escalar
          */
         void function_add();
+        /**
+         * Função de Multiplicação Matricial
+         * Essa função multiplica uma matriz por outra.
+         * Segundo a definição deste tipo de multiplicação, cada linha da primeira matriz
+         * é multiplicada por cada coluna da segunda matriz. Elemento a elemento. 
+         * Essa função também faz uso do pair m_add. Onde estão guardadas as matrizes
+         * envolvidas com essa multiplicação. De duas a duas.
+         */
+        void function_dot();
 };  
 
 #endif
