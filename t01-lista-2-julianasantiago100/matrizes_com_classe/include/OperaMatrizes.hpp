@@ -7,8 +7,6 @@
 
 class OperaMatrizes{
     private:
-        std::string m_operacao; //<!string com o nome da operação a ser realizada
-        std::vector<Matriz *> m_resultado_conta; //<! Guarda todos os resultados das contas com as matrizes separados
         std::pair<Matriz *, Matriz *> m_add; //<!Atributo que guarda as matrizes atuais que serão somadas
     public:
         /**
@@ -17,11 +15,6 @@ class OperaMatrizes{
          * @param m, a referência para a matriz a qual será aplicada a multiplicação por escalar
          */
         void function_mue(int n,Matriz * m);
-        /**
-         * Guarda todas as matrizes com seus respectivos novos valores, pós passarem pelas funções matemáticas
-         * @param m, a matriz já alterada que será adicionada ao vetor m_resultado_conta para a soma final
-         */
-        void set_resultado_conta(Matriz *m); /* LEMBRAR:: Some todas no final!! O vector guarda todos os resultados separados!*/
         /**
          * Setter das matrizes para a adição (função auxiliar)
          * A operação de adição só realiza somas de duas em duas matrizes, por isso guarda-se por meio desta função referências a duas matrizes
@@ -47,8 +40,16 @@ class OperaMatrizes{
          * é multiplicada por cada coluna da segunda matriz. Elemento a elemento. 
          * Essa função também faz uso do pair m_add. Onde estão guardadas as matrizes
          * envolvidas com essa multiplicação. De duas a duas.
+         * @return um valor-lógico verdadeiro ou falso, para afirmar se é possível multiplicar e realizar a multiplicação OU afirmar que não é possível multiplicar.
          */
-        void function_dot();
+        bool function_dot();
+        /**
+         * Função de Multiplicação Elemento à Elemento.
+         * Multiplica cada elemento da matriz A por seu respectivo elemento (em posição) na
+         * matriz B. Para que isso ocorra, as matrizes devem possuir a mesma dimensão.
+         * @return um valor-lógico verdadeiro ou falso, para afirmar se é possível multiplicar e realizar a multiplicação OU afirmar que não é possível multiplicar.
+         */
+        bool function_mul();
 };  
 
 #endif

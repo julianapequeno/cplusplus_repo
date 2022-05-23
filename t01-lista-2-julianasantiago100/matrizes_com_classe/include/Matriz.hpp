@@ -53,4 +53,4 @@ class Matriz{
         void set_vetor_matriz_lugar_especificado(int L, int C, int n);
 };
 
-#endif //FiguraGeometrica_hpp
+#endif 

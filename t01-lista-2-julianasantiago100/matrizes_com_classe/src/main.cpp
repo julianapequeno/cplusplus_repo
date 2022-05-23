@@ -35,6 +35,13 @@ std::tuple<int, int, string> matriz_informacoes_iniciais(string leitura_dados){
     return retorno;
 }
 
+/**
+ * @brief Função feita para averiguar se o programa está recebendo uma nova matriz a 
+ * ser inserida, ou uma funcionalidade a ser aplicada.
+ * @param linha_leitura_matriz, a linha lida atualmente pelo programa
+ * @return true, é uma linha de operação.
+ * @return false, é uma linha de início de inserção de matriz
+ */
 bool is_in_function(string linha_leitura_matriz){
     if(linha_leitura_matriz.substr(0,3).compare("mue")==0){
         return true;
@@ -50,38 +57,32 @@ bool is_in_function(string linha_leitura_matriz){
 }
 
 int main ( void ){
-    /*'Somador' de todas as operações realizadas */
-    std::vector<Matriz *> vetor_matrizes;
-    std::vector<string> somador; //<! variável criada para ter um controle visto de cima de todas as operações a serem realizadas no programa
-    string minha_conta;
-    //IDEIA: fazer um do_while e em cada início eu crio uma nova instância para matriz 
+    std::vector<Matriz *> vetor_matrizes; /*'Somador' de todas as operações realizadas, possuo o resultado final de cada etapa, dentro de cada uma das matrizes */
+    string minha_conta; //<! Minha string que captura a conta que está sendo realizada final
 
     /*Criação das variáveis locais que serão usadas para o controle e a manipulação do programa */
     Matriz * matrix; //<! uma referência a um objeto do tipo Matriz
     OperaMatrizes * operacao = new OperaMatrizes(); //<! uma instância (objeto) e sua referência do tipo OperaMatrizes
     string linha_leitura_matriz; //<! linha_leitura_matriz recebe a linha lida dinamicamente
-    int linhas, colunas; //<! número de linhas e colunas da matriz
+    int linhas; //<! número de linhas e colunas da matriz
     std::vector<string> minha_linha, minha_operacao; //<! vetores com a minha linha atual de forma segmentada
     string operacao_atual; //<! Para manter em aberto a operação sendo realizada entre duas matrizes
-
-    int i_add = 0; //LEMBRAR, LEMBRAR -> NAS OUTRAS FUNÇÕES COLOQUE O FALTA_UM TAMBÉM!!
-    bool acabou_dois=false,entre=false; //<! Variável de controle para o caso de ser a última matriz digitada. Ele precisa fazer os cálculos finais!
-    getline(cin,linha_leitura_matriz); //getline inicial
+    
+    int i_add = 0; 
+    bool acabou_dois=false,entre=false,deu_certo=true,resultado_apareceu=false; /*!< acabou_dois é uma variável de controle para o caso de ser a última matriz digitada. Ele precisa fazer os cálculos finais!*/
+    
+    getline(cin,linha_leitura_matriz); //!getline inicial
     do{ 
-        //std::cout << "Criei uma nova matriz!" << std::endl;
-        /*Conferindo se o dado é uma matriz ou uma operaçãoS */
-        string token;//
-        std::vector<string> linha_dinamica;//
-        istringstream tokenizer { linha_leitura_matriz };//
-        while(tokenizer >> token){//
-            linha_dinamica.push_back(token);//
-        }//
-        bool eh_operacao = is_in_function(linha_dinamica[0]);
+        /*Conferindo se o dado é uma matriz ou uma operação */
+        //! Leitura e separação dos dados da linha linha_leitura_matriz
+        string token;
+        std::vector<string> linha_dinamica;
+        istringstream tokenizer { linha_leitura_matriz };
+        while(tokenizer >> token){
+            linha_dinamica.push_back(token);
+        }
+        bool eh_operacao = is_in_function(linha_dinamica[0]); //! Verifica se é uma matriz ou uma operação
 
-                    /* std::string::iterator *it = std::find_if(linha_dinamica.begin(),linha_dinamica.end(), is_in_function());
-                        if(it != linha_dinamica.end()){//
-                        std::cout << "OPA! TEM!" << std::endl;//
-                        }*/
         if(!eh_operacao){
             entre = false;
             matrix = new Matriz(); //<! crio uma nova instância (objeto) da classe Matriz
@@ -89,14 +90,10 @@ int main ( void ){
             auto a = matriz_informacoes_iniciais(linha_leitura_matriz);
             matrix->set_nome(get<2>(a));
             matrix->set_linhas_e_colunas(get<0>(a),get<1>(a));
-            linhas = get<0>(a);
-            colunas = get<1>(a);
+            linhas = get<0>(a); 
             minha_conta = minha_conta + get<2>(a) + " ";
 
             /* Recebimento dos números contidos na matriz tamanho: (linhas*colunas)*/
-            int quantidade_espacos = colunas-1;
-            int n,encontrei_numero;
-            //string token;
             for(int i = 0; i < linhas;i++){
                 getline(cin,linha_leitura_matriz);
                 istringstream tokenizer2 { linha_leitura_matriz };
@@ -105,56 +102,46 @@ int main ( void ){
                 while(tokenizer2 >> token){
                     minha_linha.push_back(token);
                 }
-               // std::cout << "Adicionando na linha" << std::endl;
-                //std::cout << "Esse é o tamanho das colunas: " << colunas << " e esse é o tamanho do vector minha linha: " << minha_linha.size() << std::endl;
                 int meu_numero;
                 /*Mudança de string para int e atribuição aos atributos do objeto da classe Matriz*/
-                for(int y = 0; y < minha_linha.size(); y++){
-                    //std::cout << i << " Entrando..." << std::endl;
+                for(long unsigned int y = 0; y < minha_linha.size(); y++){
                     meu_numero = stoi(minha_linha[y]);
                     matrix->set_vetor_matriz(i,meu_numero); 
                 }
-                //std::cout << "Coloquei no objeto!" << std::endl;
-                minha_linha.clear(); //apago do meu vetor de linha dinâmico os dados da minha linha atual
-                //std::cout << "Limpei para o próximo!!"<< std::endl;
+                minha_linha.clear(); //!Apago do meu vetor de linha dinâmico os dados da minha linha atual
             }
-            vetor_matrizes.push_back(matrix); //<!Adiciono a referência da instância a classe Matriz ao vetor de referência das matrizes
+            vetor_matrizes.push_back(matrix); //!Adiciono a referência da instância a classe Matriz ao vetor de referência das matrizes
         }else{
-            entre = true; //Para entrar na leitura de operações
+            entre = true; //!Para entrar na leitura de operações
         }
 
-        if(acabou_dois || entre){
+        if(acabou_dois || entre){ //<! Se ainda estiver dentro de um cálculo ou se for uma linha de leitura de uma nova operação
             /*Recebimento de uma operação
             **  Isto é, Adição (add),
             **  Multiplicação matricial (dot),
             **  Multiplicação elemento à elemento (mul) ou
-            **  Multiplicação por escalar (mue)
+            **  Multiplicação por escalar (mue).
             */
-            if(!acabou_dois){
+            if(!acabou_dois){ //! Se não estiver dentro de um cálculo, leia a nova operação
                 string token_operacao;
                 istringstream tokenizer_operacoes { linha_leitura_matriz };
-               // std::cout << "Linha de leitura atual: " << linha_leitura_matriz << std::endl;
                 while(tokenizer_operacoes >> token_operacao){
-                   //std::cout << "Token = " << token_operacao << std::endl;
                     minha_operacao.push_back(token_operacao);
                 }
-              //  std::cout << "Minha linha -> " << minha_operacao[0] << " & " << minha_operacao[1]<< std::endl;
                 if(minha_operacao.size()==1){
-                    minha_conta = minha_conta + minha_operacao[0] + " " ; //<! Adiciono mais uma operação a string
+                    minha_conta = minha_conta + minha_operacao[0] + " " ; //! Adiciono mais uma operação a string
                 }else{
-                    minha_conta = minha_conta + minha_operacao[0] + " " + minha_operacao[1] + " "; //<! Adiciono na minha string da conta a operação mue (ela recebe um parâmetro númérico que também aparece na conta)
+                    minha_conta = minha_conta + minha_operacao[0] + " " + minha_operacao[1] + " "; //! Adiciono na minha string da conta a operação mue (ela recebe um parâmetro númérico que também aparece na conta)
                 }
             }
             
             /*Início das operações*/
             if(minha_operacao[0].compare("mue")==0){
                 int valor_multiplicador = stoi(minha_operacao[1]);
-                operacao->function_mue(valor_multiplicador,matrix); /*Referencia a última matrix criada! Perfeito!*/
-                operacao->set_resultado_conta(matrix); /* FEITO!! OKAY!! Multiplicar a matriz por valor_multiplicador -> Chamar a classe de OperaMatrizes*/
+                operacao->function_mue(valor_multiplicador,matrix); /*Referencia a última matrix criada! Perfeito! A última matrix inserida sempre conterá o resultado final*/
             } 
-            if(minha_operacao[0].compare("add")==0 || operacao_atual.compare("add")==0){
+            if(minha_operacao[0].compare("add")==0 || operacao_atual.compare("add")==0){ /*Se for igual a add ou se estiver ocorrendo um cálculo*/
                 if(i_add%2==0){ //2q + 0
-                    //std::cout << "Meu vetor atual: " << matrix->get_nome() << std::endl;
                     operacao_atual = minha_operacao[0];
                     operacao->set_par_matriz(matrix,true);
                     i_add++;
@@ -165,8 +152,7 @@ int main ( void ){
                     operacao->set_par_matriz(matrix,false);
                     operacao->function_add();
                     i_add++;
-                   // i_add = 0; //*Reseta o quantificador de matrizes para a adição
-                    operacao_atual = " "; //* Reseta a operação atual quando entra a segunda matriz
+                    operacao_atual = " "; //* Reseta a operação atual quando entra a segunda matriz, aqui as contas são de dois em dois
                 }
             } 
             if(minha_operacao[0].compare("dot")==0 || operacao_atual.compare("dot")==0){   
@@ -179,61 +165,80 @@ int main ( void ){
                     acabou_dois = false;
                     entre = false;
                     operacao->set_par_matriz(matrix,false);
-                    operacao->function_dot();
+                    deu_certo = operacao->function_dot();
+                    if(!deu_certo){
+                        std::size_t found = minha_conta.find_last_of("d");
+                        if(found != std::string::npos){
+                            minha_conta.erase(found-1,minha_conta.size()-1); //!Do espaço até a última posição
+                        }
+                        std::cout <<"Resultado " << minha_conta << " pôde ser calculado" ;
+                        resultado_apareceu = true;
+                        break;
+                    }
                     i_add++;
                     operacao_atual = " "; //* Reseta a operação atual quando entra a segunda matriz
                 }
-                /*Preparar para receber outra matriz e seus dados*/
-                /* Depois, enviar as duas para a operação de Multiplicação matricial -> Chamar a classe de OperaMatrizes */
             }
-            if(minha_operacao[0].compare("mul")==0){
-                /*Preparar para receber outra matriz e seus dados*/
-                /* Depois, enviar as duas para a operação de Multiplicação elemento à elemento -> Chamar a classe de OperaMatrizes */
+            if(minha_operacao[0].compare("mul")==0 || operacao_atual.compare("mul")==0){
+                if(i_add%2==0){
+                    operacao_atual = minha_operacao[0];
+                    operacao->set_par_matriz(matrix,true);
+                    i_add++;
+                    acabou_dois = true;
+                }else if(i_add%2==1){
+                    acabou_dois = false;
+                    entre = false;
+                    operacao->set_par_matriz(matrix,false);
+                    deu_certo = operacao->function_mul();
+                    if(!deu_certo){
+                        //!Apagar na minha string minha_conta, essa operação até o final da conta. Pois a operação não deu certo
+                        std::size_t found = minha_conta.find_last_of("m");
+                        if(found != std::string::npos){
+                            minha_conta.erase(found-1,minha_conta.size()-1);
+                        }
+                        std::cout <<"Resultado " << minha_conta << " pôde ser calculado" ;
+                        resultado_apareceu = true;
+                        break;
+                    }
+                    i_add++;
+                    operacao_atual = " ";
+                }
             }
             minha_operacao.clear();
         }
     }while(!getline(cin,linha_leitura_matriz).eof());
+
+        /*Resultados finais. Print da minha_conta e da matriz resultante! (presente na última matrix entrada pelo user) */
         minha_conta.erase(minha_conta.size()-1);
-        std::cout << "Resultado " << minha_conta << std::endl;
-        for(int i = 0; i < vetor_matrizes[vetor_matrizes.size()-1]->get_linhas_e_colunas().first; i++){
-            for(int y = 0; y < vetor_matrizes[vetor_matrizes.size()-1]->get_linhas_e_colunas().second; y++){
-                if(y+1==vetor_matrizes[vetor_matrizes.size()-1]->get_linhas_e_colunas().second){
-                    std::cout << vetor_matrizes[vetor_matrizes.size()-1]->get_valor_matriz(i,y);
-                }else{
-                    std::cout << vetor_matrizes[vetor_matrizes.size()-1]->get_valor_matriz(i,y)<< " ";
+        if(!resultado_apareceu){
+            std::cout << "Resultado " << minha_conta << std::endl;
+            for(int i = 0; i < vetor_matrizes[vetor_matrizes.size()-1]->get_linhas_e_colunas().first; i++){
+                for(int y = 0; y < vetor_matrizes[vetor_matrizes.size()-1]->get_linhas_e_colunas().second; y++){
+                    if(y+1==vetor_matrizes[vetor_matrizes.size()-1]->get_linhas_e_colunas().second){
+                        std::cout << vetor_matrizes[vetor_matrizes.size()-1]->get_valor_matriz(i,y);
+                    }else{
+                        std::cout << vetor_matrizes[vetor_matrizes.size()-1]->get_valor_matriz(i,y)<< " ";
+                    }
                 }
+                std::cout << std::endl;
             }
-            std::cout << std::endl;
         }
-        /*PERCEBA QUE O RESULTADO FINAL DE CADA PASSO ESTÁ DENTRO DA ÚLTIMA MATRIZ USADA
+        
+        /*Sobre o resultado estar na última matrix: PERCEBA QUE O RESULTADO FINAL DE CADA PASSO ESTÁ DENTRO DA ÚLTIMA MATRIZ USADA
         * NAQUELE PASSO. ASSIM, PROGRESSIVAMENTE...O RESULTADO FINAL ESTÁ DENTRO DA ÚLTIMA
         * MATRIZ INSERIDA. ASSIM, SE TORNA DESNECESSÁRIO O MÉTODO DE 'SOMAR_RESULTADO' NA CLAS-
         * SE OPERAMATRIZES.
         */
-    //getline(cin,linha_leitura_matriz);  depois do -> /*Conferindo se o dado é uma matriz ou uma operaçãoS */
-    
-        /*
-        int found_espaco = 0,found_numero = 0;
-        int n;
-        for(int i = 0; i < linhas; i++){
-            getline(cin, linha_leitura_matriz); //o número de espaços é sempre o número de colunas -1;
-            for(int espaco = 0; espaco <= (colunas-1);espaco++){
-                found_numero = linha_leitura_matriz.find("1234567890");
-                linha_leitura_matriz[found_numero] = 'a';
-                found_espaco = linha_leitura_matriz.find(" ");
-                n = stoi(linha_leitura_matriz.substr(found_numero,found_espaco));
-                //////AQUI ESTOU TENTANDO CAPTURAR OS DADOS DA MATRIZ
-                std::cout << "Esse é o seu n: " << n << std::endl;
-            }
-        }
-        getline(cin,leitura_dados);
-        if(leitura_dados.substr(0,3).compare("mue")==0){
-            //é um
-        }
-        */
-    //IDEIA DE ESTRUTURA GERAL PARA O PROGRAMA do{}while(!getline(cin,leitura_dados).eof());
 
-    /*Apagando qualquer possibilidade de vazamento de memória */
-    // linha_dinamica.clear();
-    //IDEIA_LEMBRAR! KILL TODOS OS Matriz* do vetor_matrizes!!! ELE POSSUI TODAS AS REFERENCIAS AOS OBJETOS CRIADOS, ENTÃO JÁ SERVE PARA EXCLUIR TODOS!
+        /*Apagando qualquer possibilidade de vazamento de memória */
+        for(auto a: vetor_matrizes){
+            delete a;
+        }
+        matrix = NULL;
+        operacao = NULL;
+        delete matrix;
+        delete operacao;
+        
+        /*Fim do programa! */
+        return 0;
 }
