@@ -60,7 +60,7 @@ Resultado M1 mue 3 dot M3 mul M4
 3
 6
 ```
-**Obeserve**: veja que `mue` recebe apenas do valor do escalar na linha seguinte!
+**Obeserve**: veja que `mue` recebe apenas do valor do escalar na mesma linha!
 
 ## Exemplo 3
 **Exemplo de entrada**
@@ -81,7 +81,7 @@ M4 2 1
 ```
 **Saída esperada:**
 ```
-Resultado M1 mue 3 dot M3 pôde ser calculado, resultado até aqui:
+Resultado M1 mue 3 dot M3 não pôde ser calculado, resultado até aqui:
 3 3
 3 6
 ```

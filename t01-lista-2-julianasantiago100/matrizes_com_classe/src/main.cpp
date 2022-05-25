@@ -167,13 +167,10 @@ int main ( void ){
                     operacao->set_par_matriz(matrix,false);
                     deu_certo = operacao->function_dot();
                     if(!deu_certo){
-                        std::size_t found = minha_conta.find_last_of("d");
-                        if(found != std::string::npos){
-                            minha_conta.erase(found-1,minha_conta.size()-1); //!Do espaço até a última posição
-                        }
-                        std::cout <<"Resultado " << minha_conta << " pôde ser calculado" ;
+                        std::cout <<"Resultado " << minha_conta << "não pôde ser calculado, resultado até aqui:" <<std::endl;
                         resultado_apareceu = true;
-                        break;
+                        vetor_matrizes.pop_back(); //!Anula a última matrix do meu resultado. A anterior é o meu último resultado válido.
+                        break; //!Saia do meu ambiente de cálculo matemático
                     }
                     i_add++;
                     operacao_atual = " "; //* Reseta a operação atual quando entra a segunda matriz
@@ -191,14 +188,9 @@ int main ( void ){
                     operacao->set_par_matriz(matrix,false);
                     deu_certo = operacao->function_mul();
                     if(!deu_certo){
-                        //!Apagar na minha string minha_conta, essa operação até o final da conta. Pois a operação não deu certo
-                        std::size_t found = minha_conta.find_last_of("m");
-                        if(found != std::string::npos){
-                            minha_conta.erase(found-1,minha_conta.size()-1);
-                        }
-                        std::cout <<"Resultado " << minha_conta << " pôde ser calculado" ;
+                        std::cout <<"Resultado " << minha_conta << "não pôde ser calculado, resultado até aqui:" ;
                         resultado_apareceu = true;
-                        break;
+                        break;//!Saia do meu ambiente de cálculo matemático
                     }
                     i_add++;
                     operacao_atual = " ";
@@ -212,7 +204,8 @@ int main ( void ){
         minha_conta.erase(minha_conta.size()-1);
         if(!resultado_apareceu){
             std::cout << "Resultado " << minha_conta << std::endl;
-            for(int i = 0; i < vetor_matrizes[vetor_matrizes.size()-1]->get_linhas_e_colunas().first; i++){
+        }
+         for(int i = 0; i < vetor_matrizes[vetor_matrizes.size()-1]->get_linhas_e_colunas().first; i++){
                 for(int y = 0; y < vetor_matrizes[vetor_matrizes.size()-1]->get_linhas_e_colunas().second; y++){
                     if(y+1==vetor_matrizes[vetor_matrizes.size()-1]->get_linhas_e_colunas().second){
                         std::cout << vetor_matrizes[vetor_matrizes.size()-1]->get_valor_matriz(i,y);
@@ -222,7 +215,6 @@ int main ( void ){
                 }
                 std::cout << std::endl;
             }
-        }
         
         /*Sobre o resultado estar na última matrix: PERCEBA QUE O RESULTADO FINAL DE CADA PASSO ESTÁ DENTRO DA ÚLTIMA MATRIZ USADA
         * NAQUELE PASSO. ASSIM, PROGRESSIVAMENTE...O RESULTADO FINAL ESTÁ DENTRO DA ÚLTIMA

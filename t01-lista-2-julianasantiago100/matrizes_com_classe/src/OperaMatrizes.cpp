@@ -25,23 +25,20 @@ void OperaMatrizes::function_add(){
 }
 
 bool OperaMatrizes::function_dot(){
-    //Multiplica-se cada linha da primeira matriz por cada coluna da segunda matriz
-   std::vector<std::vector<int>> resultado_dot;
+    //!Multiplica-se cada linha da primeira matriz por cada coluna da segunda matriz
+    std::vector<std::vector<int>> resultado_dot;
+    std::vector<int> vetor_dinamico_linha;
     int i_final = 0, y_final = 0, soma_multiplicacao= 0,flag = 0, coluna;
-    if(this->m_add.first->get_linhas_e_colunas().second == this->m_add.second->get_linhas_e_colunas().first){
-        //Meu resultado tem o número de linhas da primeira matriz
+    if(this->m_add.first->get_linhas_e_colunas().second == this->m_add.second->get_linhas_e_colunas().first){ //!Condição necessária para cálculo ser efetuado e dar certo
         resultado_dot.resize(this->m_add.first->get_linhas_e_colunas().first);
-        
-        
-        for(int i =  0; i < this->m_add.first->get_linhas_e_colunas().first ; i++){
+        for(int i =  0; i < this->m_add.first->get_linhas_e_colunas().first ; i++){//!Roda pelas linhas da primeira matriz -> Cálculo de multiplicação matricial
             coluna = 0;
-            //meu resultado tem o número de colunas da segunda matriz
             resultado_dot[i].resize(this->m_add.second->get_linhas_e_colunas().second); 
-            while(flag < this->m_add.second->get_linhas_e_colunas().second){ //de acordo com a quantidade de colunas da segunda matriz
-                for(int y = 0; y < this->m_add.second->get_linhas_e_colunas().second; y++){ //roda pelas minhas colunas da segunda matriz -> UMA DE CADA VEZ
-                    soma_multiplicacao += (this->m_add.first->get_valor_matriz(i,y) * this->m_add.second->get_valor_matriz(y,coluna));
+            while(flag < this->m_add.second->get_linhas_e_colunas().second){ //!De acordo com a quantidade de colunas da segunda matriz
+                for(int y = 0; y < this->m_add.second->get_linhas_e_colunas().first; y++){ //!Roda pelas minhas linhas da segunda matriz, i.e., cada elemento da coluna
+                  soma_multiplicacao += (this->m_add.first->get_valor_matriz(i,y) * this->m_add.second->get_valor_matriz(y,coluna));
                 }
-                resultado_dot[i_final][y_final] = soma_multiplicacao;
+                resultado_dot.at(i_final).at(y_final) = (soma_multiplicacao);
                 y_final++;
                 coluna++;
                 flag++;
@@ -55,9 +52,16 @@ bool OperaMatrizes::function_dot(){
         * gerais do programa. Esta lógica sempre considera a última matriz inserida pelo usuário, como a ma-
         * triz que possui os resultados no final da compilação. Manteremos assim.
         */
-        for(int i = 0; i < this->m_add.first->get_linhas_e_colunas().first; i++){
-            for(int y = 0; y < this->m_add.first->get_linhas_e_colunas().second; y++){
-                this->m_add.second->set_vetor_matriz_lugar_especificado(i,y, resultado_dot[i][y]); //this->m_add.first->get_valor_matriz(i,y)
+        int linha_new = this->m_add.first->get_linhas_e_colunas().first;
+        int coluna_new = this->m_add.second->get_linhas_e_colunas().second;
+        for(int i = 0; i < linha_new; i++){
+            for(int y = 0; y < coluna_new; y++){
+                if(i== 0 && y==0){ //!Inicializando novo tamanho da Matriz
+                    this->m_add.second->clear_matriz();
+                    this->m_add.second->set_linhas_e_colunas(this->m_add.first->get_linhas_e_colunas().first,this->m_add.second->get_linhas_e_colunas().second);
+                    this->m_add.second->reiniciar_vector_matriz();
+                }
+                this->m_add.second->push_vector_matriz(i,resultado_dot.at(i).at(y)); 
             }
             resultado_dot[i].clear();
         }

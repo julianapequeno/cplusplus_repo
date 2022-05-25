@@ -1,1 +1,3 @@
-Resultado M1 mue 3 dot M3 pôde ser calculado
+Resultado M1 mue 3 dot M3 não pôde ser calculado, resultado até aqui:
+3 3
+3 6
