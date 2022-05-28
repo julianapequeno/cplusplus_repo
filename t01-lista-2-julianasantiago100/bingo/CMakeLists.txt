@@ -22,11 +22,14 @@ set ( EXEC_NAME "program")
 # Cria um executável com nome "run_tests", adiciona neste executável os arquivos do test manager e o seu main.cpp
 #add_executable( ${EXEC_NAME}
 #                src/main.cpp
-#                src/BingoRand.cpp )
-
+#                src/BingoRand.cpp 
+#                src/Jogador.cpp 
+#                src/BOT_BINGO.cpp)
 add_executable( ${EXEC_NAME}
-                src_ref/main.cpp
-                src_ref/BingoRand.cpp )
+                src/main.cpp
+                src/BingoRand.cpp 
+                src/Jogador.cpp
+                src/BOT_BINGO.cpp)
 
 # define C++14 standard
 set_property(TARGET ${EXEC_NAME} PROPERTY CXX_STANDARD 14)
