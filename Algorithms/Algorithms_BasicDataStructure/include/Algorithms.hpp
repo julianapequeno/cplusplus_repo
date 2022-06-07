@@ -35,6 +35,7 @@ class Algorithms{
 
         //Circular Vector
         int insertion_inicio_circular_vector(int *v,int *N,int *B, int Nmax, int el);
+        int insertion_inicio_circular_vector2(int *v,int *N,int *B, int Nmax, int el);
         int insertion_fim_circular_vector(int *v,int *N,int *B, int Nmax, int el);
         int acess_circular_vector(int *v, int N, int Nmax, int B, int pos);
         int remocao_inicio(int *v, int *N, int *B, int Nmax);

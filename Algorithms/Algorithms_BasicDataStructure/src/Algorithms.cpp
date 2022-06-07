@@ -147,7 +147,7 @@ mergeSort N
 
 
 */
-void mergeSort(int *v, int N, int M){ //computer complexity -> O(N*logN)
+void Algorithms::mergeSort(int *v, int N, int M){ //computer complexity -> O(N*logN)
     int ii =0, pp = 0, qq = M; //M - middle for end - size
     int *tmp = (int *)malloc (N* sizeof(int));
     ///DAQUI, 3 WHILES -> O(N)
@@ -182,7 +182,7 @@ int Algorithms::insertion_inicio_circular_vector(int *v,int *N,int *B, int Nmax,
     *N++;
     //Computer Complexity -> Worst and Best case -> O(1)
 }
-int Algorithms::insertion_inicio_circular_vector(int *v,int *N,int *B, int Nmax, int el){
+int Algorithms::insertion_inicio_circular_vector2(int *v,int *N,int *B, int Nmax, int el){
     if(*N ==Nmax){
         return -1;
     }

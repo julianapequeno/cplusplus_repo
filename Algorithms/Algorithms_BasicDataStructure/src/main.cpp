@@ -77,6 +77,10 @@ int main(){
     std::cout << std::endl;
     int  vvv[10] = {2,3,4,5,1,10,2,3,7,8};
     std::cout << BACKGROUND << ANSI_COLOR_RED << "QUICK SORT" << RESET << std::endl;
+    std::cout << ANSI_COLOR_YELLOW << "Original vector: " << RESET;
+    for(int i  = 0; i < 10; i++){
+        std::cout << vvv[i] << " ";
+    }
     bool resultQuickSort = a.quicksort(vvv,10);
     if(resultQuickSort){
         std::cout << ANSI_COLOR_YELLOW << "Sort vector after quick sort: " << RESET;
@@ -86,6 +90,17 @@ int main(){
     }
     std::cout << std::endl;
 
+    int vector[10] = {2,3,4,5,1,10,2,3,7,8}; //reinicializando
     std::cout<< BACKGROUND << ANSI_COLOR_RED << "MERGE SORT" << RESET << std::endl;
-    std::cout << ANSI_COLOR_CYANO << "Sort vector afete ";
+     std::cout << ANSI_COLOR_CYANO << "Original vector: " << RESET;
+    for(int i  = 0; i < 10; i++){
+        std::cout << vector[i] << " ";
+    }
+    std::cout << ANSI_COLOR_CYANO << "Sort vector after merge sort: " << RESET;
+    a.mergeSort(vector,10,5);
+    for(auto i: vector){
+        std::cout << i << " ";
+    }
+    std::cout << std::endl;
+
 }
