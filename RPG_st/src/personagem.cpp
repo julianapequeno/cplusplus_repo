@@ -1,4 +1,4 @@
-#include "personagem.hpp"
+#include "../include/personagem.hpp"
 
 void Personagem::set_nome(std::string nome){
     this->m_nome = nome; 
