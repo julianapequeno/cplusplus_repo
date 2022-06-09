@@ -40,4 +40,6 @@ class Algorithms{
         int acess_circular_vector(int *v, int N, int Nmax, int B, int pos);
         int remocao_inicio(int *v, int *N, int *B, int Nmax);
         int remocao_final(int *v,int *N, int *B, int Nmax);
+
+        
 };      

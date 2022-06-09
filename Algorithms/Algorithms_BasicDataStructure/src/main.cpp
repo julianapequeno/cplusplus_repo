@@ -28,7 +28,7 @@ int main(){
     if(result){
         std::cout << ANSI_COLOR_GREEN << "Number " << number << " it exists in vector😊" << std::endl<<  RESET;
     }else{
-        std::cout << ANSI_COLOR_RED << "This number does not exist in vector🙁" << std::endl;
+        std::cout << ANSI_COLOR_RED << "This number does not exist in vector🙞" << std::endl;
     }
 
     std::cout << BACKGROUND << ANSI_COLOR_RED << "BUBBLE SORT" << RESET << std::endl;
@@ -102,5 +102,10 @@ int main(){
         std::cout << i << " ";
     }
     std::cout << std::endl;
+
+    std::cout << "VETOR CIRCULAR" << std::endl;
+    int vetor_circular[4] = {0,1,2,3};
+    int i = *(vetor_circular+0);
+    //insertion_inicio_circular_vector(vetor_circular,i,0,4,1);
 
 }
