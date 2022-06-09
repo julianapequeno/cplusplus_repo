@@ -9,21 +9,25 @@ BOT_mestre_de_mesa::BOT_mestre_de_mesa(){
 void BOT_mestre_de_mesa::setter_jogadores_and_BOT(Personagem *p){
     if(this->m_jogadores_na_partida > 13){ /*Considera o jogador escolh*/
         std::cout << "Existem muitos jogadores. Lembre-se que atualmente só pode-se jogar no máximo 13, contando com o usuário" << std::endl;
+    }else if(this->m_jogadores_na_partida == 1){
+        std::cout << "No mínimo, ponha outro jogador para jogar com você! Jogar sozinho é tão chato :/" << std::endl;
     }else{
         int a = 0;
         std::vector<std::string> nomes_temp;
+        p->inicializa_ficha();
         this->m_personagens.push_back(p); /*Coloca o jogador da partida dentro do vetor de jogadores, na primeira posição*/
         nomes_temp = this->name_jogador_BOT(p);
-        std::cout << "Escalando jogadores para esta partida..." << std::endl;
         while(a < this->m_jogadores_na_partida-1){ //! Conta o jogador interativo também
             Personagem *p1 = new Personagem();
             /*Escolha do nome dos personagens*/ /*Podem ser quaisquer dos outros no arquivo, menos o que o usuário escolheu*/
             p1->set_nome(nomes_temp.at(a)); /*Atribui os nomes dos BOTs que vão jogar junto ao jogador*/
+            std::cout << ANSI_COLOR_GREEN <<  "Escalando " << nomes_temp.at(a) << " para esta partida..." << RESET << std::endl;
+            p1->inicializa_ficha();
             this->m_personagens.push_back(p1);
             a++;
         }
-        std::cout << "--------------------------------------------" << std::endl;
         std::cout << "Jogadores escalados! Bom jogo :)" << std::endl;
+        std::cout << "--------------------------------------------" << std::endl;
     }
 }
 

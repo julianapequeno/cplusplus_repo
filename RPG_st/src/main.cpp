@@ -28,9 +28,9 @@ int main(){
             int jogadores_quant = 0;
             std::cin >> jogadores_quant;
             bot->set_quant_jogadores(jogadores_quant);
+            bot->escolha_personagem_jogador(p);
             bot->setter_jogadores_and_BOT(p);
 
-            bot->escolha_personagem_jogador(p);
             std::cout << "Okay! Seja bem vindo(a) " << p->get_nome() << " ao jogo de RPG_st!" << std::endl;
             std::cout << "Estes são os jogadores que irão jogar essa partida com você: " << std::endl;
             for(int i = 1; i < bot->quant_jogadores();i++){ /*Desconsidera a primeira posição, pois é onde o jogador usuário está*/
