@@ -1,63 +1,63 @@
-# TAD SEQU NCIA #
+# TAD SEQU√äNCIA #
 
-*TAD -> ConstruÁ„o matem·tica que define a natureza do dado criado.*
+*TAD -> Constru√ß√£o matem√°tica que define a natureza do dado criado.*
 
-*ED -> ImplementaÁ„o da TAD, como a TAD È mapeada na memÛria e como ela È implementada*
+*ED -> Implementa√ß√£o da TAD, como a TAD √© mapeada na mem√≥ria e como ela √© implementada*
 
-**_Agora, qual a melhor ED para elaborar uma sequÍncia em um computador?_**
-- Vamos discutir entre dois tipos diferentes de ED da TAD SEQU NCIA: Vetores e Lista Ligadas
+**_Agora, qual a melhor ED para elaborar uma sequ√™ncia em um computador?_**
+- Vamos discutir entre dois tipos diferentes de ED da TAD SEQU√äNCIA: Vetores e Lista Ligadas
 
-*OperaÁıes que trabalharemos a seguir em cada uma das ED: InserÁ„o, RemoÁ„o e Acesso*
+*Opera√ß√µes que trabalharemos a seguir em cada uma das ED: Inser√ß√£o, Remo√ß√£o e Acesso*
 
-**REMO«√O, INSER«√O E ACESSO**
-- Posso fazer de forma _ARBITR¡RIA_
-- Posso fazer no _INÕCIO_
+**REMO√á√ÉO, INSER√á√ÉO E ACESSO**
+- Posso fazer de forma _ARBITR√ÅRIA_
+- Posso fazer no _IN√çCIO_
 - Posso fazer no _FIM_
 
 Assim, iremos preencher a seguinte tabela com o custo computacional dos algoritmos ao longo deste aprendizado:
 
-|     | _INICÕO_ | _ARBITR¡RIA_ | _FIM_ |
+|     | _INIC√çO_ | _ARBITR√ÅRIA_ | _FIM_ |
 | ----| ---------|------------|-----|
-| *REMO«√O* | ------|-----------|-----|
-| *INSER«√O*|-------|-----------|-----|
+| *REMO√á√ÉO* | ------|-----------|-----|
+| *INSER√á√ÉO*|-------|-----------|-----|
 | *ACESSO*|--------|------------|-----|
 
 
 **Simbora?!?**
-- _TAD SEQU NCIA PILHA_ : Como no gerenciamento de memÛria. SÛ consigo inserir/remover o elemento de fila. Ou seja, a ˙nica posiÁ„o que consigo inserir/remover um elemento È pelo final.
-     - Assim, percebe-se que, na TAD PILHA, sÛ posso inserir no fim ou remover no fim. Ent„o, inserÁ„o/remoÁ„o arbitr·ria se torna irrelevante. Neste caso, h· uma economia computacional.
+- _TAD SEQU√äNCIA PILHA_ : Como no gerenciamento de mem√≥ria. S√≥ consigo inserir/remover o elemento de fila. Ou seja, a √∫nica posi√ß√£o que consigo inserir/remover um elemento √© pelo final.
+     - Assim, percebe-se que, na TAD PILHA, s√≥ posso inserir no fim ou remover no fim. Ent√£o, inser√ß√£o/remo√ß√£o arbitr√°ria se torna irrelevante. Neste caso, h√° uma economia computacional.
 
-- _TAD SEQU NCIA FILA_ : A do buffer!! Por exemplo, a barra de rolagem do youtube. O BUFFER permite que vc armazene os quadros que ainda faltam para evitar que vc perca a sua conex„o de forma brusca, como um jogo da cobrinha, vc consome frames de um lado, e eles s„o retirados do outro. 
-    - Assim, vocÍ faz a inserÁ„o no inÌcio e remoÁ„o no fim, OU, a remoÁ„o no inÌcio e a inserÁ„o no fim. Mais uma vez, a inserÁ„o/remoÁ„o arbitr·ria se torna irrelevante.
+- _TAD SEQU√äNCIA FILA_ : A do buffer!! Por exemplo, a barra de rolagem do youtube. O BUFFER permite que vc armazene os quadros que ainda faltam para evitar que vc perca a sua conex√£o de forma brusca, como um jogo da cobrinha, vc consome frames de um lado, e eles s√£o retirados do outro. 
+    - Assim, voc√™ faz a inser√ß√£o no in√≠cio e remo√ß√£o no fim, OU, a remo√ß√£o no in√≠cio e a inser√ß√£o no fim. Mais uma vez, a inser√ß√£o/remo√ß√£o arbitr√°ria se torna irrelevante.
 
 
-Agora vamos ver se as implementaÁıes de tais algoritmos s„o boas e ˙teis para as TADs apresentadas acima (focaremos nelas duas).
+Agora vamos ver se as implementa√ß√µes de tais algoritmos s√£o boas e √∫teis para as TADs apresentadas acima (focaremos nelas duas).
 
 Como implementar? ED (Estrutura de Dados)!!
 
 - A ED VETOR possui uma homogeneidade de tipos, todos os elementos possuem o mesmo tipo, e assim, o mesmo tamanho. 
-    - Posso ter acesso a qualquer elemento. Acesso aleatÛrio
-    - N„o preciso dos apontadores, gasta menos memÛria nesse quesito.
+    - Posso ter acesso a qualquer elemento. Acesso aleat√≥rio
+    - N√£o preciso dos apontadores, gasta menos mem√≥ria nesse quesito.
 
-- A ED LISTA LIGADA possui uma heterogeinidade de tipos, os elementos podem ter tipos diferentes, e assim tamanhos diferentes. PorÈm, cada elemento possui um ponteiro diferente.
-    - N„o tenho acesso a qualquer elemento, apenas ao primeiro. Acesso sequencial.
+- A ED LISTA LIGADA possui uma heterogeinidade de tipos, os elementos podem ter tipos diferentes, e assim tamanhos diferentes. Por√©m, cada elemento possui um ponteiro diferente.
+    - N√£o tenho acesso a qualquer elemento, apenas ao primeiro. Acesso sequencial.
     - Preciso de apontadores para os elementos.
 
-## DISCUTINDO A IMPLEMENTA«√O DA TAD SEQU NCIA ##
+## DISCUTINDO A IMPLEMENTA√á√ÉO DA TAD SEQU√äNCIA ##
 
-Como representar a sequÍncia?
+Como representar a sequ√™ncia?
     
-- Um apontador para a sequÍncia
-- Um N que consta a quantidade de elementos presentes na sequÍncia.
-- Um Nmax que consta a quantidade m·xima de elementos que PODEM ESTAR na sequÍncia
+- Um apontador para a sequ√™ncia
+- Um N que consta a quantidade de elementos presentes na sequ√™ncia.
+- Um Nmax que consta a quantidade m√°xima de elementos que PODEM ESTAR na sequ√™ncia
 
 <p align='center'>
     <strong>COM ED VETOR</strong>
 </p>
 
 ```c++
-    std::cout << "Implementando a TAD SEQU NCIA" << std::endl;
-    char v[10]; //! Implementando na forma est·tica
+    std::cout << "Implementando a TAD SEQU√äNCIA" << std::endl;
+    char v[10]; //! Implementando na forma est√°tica
     int N = 0;
     int Nmax = 10;
 ```
@@ -66,98 +66,98 @@ Como representar a sequÍncia?
 
 ```c++
     char acesso(char *v, int N, int pos){
-        return v[pos]; //!Pode ser tambÈm *(v+pos), ou seja, o acesso È O(1), chama-se de ACESSO RAND‘MICO.
+        return v[pos]; //!Pode ser tamb√©m *(v+pos), ou seja, o acesso √© O(1), chama-se de ACESSO RAND√îMICO.
     }
 ```
-- Acesso RandÙmico significa dizer que n„o importa qual elemento vocÍ queria acessar, o custo computacional sempre ser· o mesmo.
+- Acesso Rand√¥mico significa dizer que n√£o importa qual elemento voc√™ queria acessar, o custo computacional sempre ser√° o mesmo.
 
-Agora temos a nossa primeira informaÁ„o!! Perceba, abaixo:
+Agora temos a nossa primeira informa√ß√£o!! Perceba, abaixo:
 
-|  VETOR | _INICÕO_ | _ARBITR¡RIA_ | _FIM_ |
+|  VETOR | _INIC√çO_ | _ARBITR√ÅRIA_ | _FIM_ |
 | ----| ---------|------------|-----|
-| *REMO«√O* | ------|-----------|-----|
-| *INSER«√O*|-------|-----------|-----|
+| *REMO√á√ÉO* | ------|-----------|-----|
+| *INSER√á√ÉO*|-------|-----------|-----|
 | *ACESSO*|Constante|Constante|Constante|
 
-- ALGORITMO DE INSER«√O 
-    - pos e el s„o elementos de inserÁ„o.
+- ALGORITMO DE INSER√á√ÉO 
+    - pos e el s√£o elementos de inser√ß√£o.
 ```c++
     void inserir(char *v, int *N, int Nmax, int pos, char el){
         if(*N == Nmax){
-            //return -1; //! N„o d· para inserir mais ninguÈm no vetor
+            //return -1; //! N√£o d√° para inserir mais ningu√©m no vetor
         }else{
             for(int ii = N-1; ii >= pos;ii--)
-                v[ii+1] = v[ii]; //!Est· deslocando todos os n˙meros para inserir o el em uma posiÁ„o
-            v[pos] = el; //!Finalmente, insira o el dentro do vetor, na posiÁ„o pos
-            *N = *N+1; //!Atualizando o valor de N, j· que agora h· mais um elemento no vetor
+                v[ii+1] = v[ii]; //!Est√° deslocando todos os n√∫meros para inserir o el em uma posi√ß√£o
+            v[pos] = el; //!Finalmente, insira o el dentro do vetor, na posi√ß√£o pos
+            *N = *N+1; //!Atualizando o valor de N, j√° que agora h√° mais um elemento no vetor
         }
-        //Nestre caso, a inserÁ„o no inÌcio È O(n), inserÁ„o aleatÛria È O(n) e a inserÁ„o no ˙ltimo elemento È O(1)
+        //Nestre caso, a inser√ß√£o no in√≠cio √© O(n), inser√ß√£o aleat√≥ria √© O(n) e a inser√ß√£o no √∫ltimo elemento √© O(1)
     } 
 
 ```
-Certo! ^^ Ent„o agora temos que:
+Certo! ^^ Ent√£o agora temos que:
 
-|  VETOR | _INICÕO_ | _ARBITR¡RIA_ | _FIM_ |
+|  VETOR | _INIC√çO_ | _ARBITR√ÅRIA_ | _FIM_ |
 | ----| ---------|------------|-----|
-| *REMO«√O* | ------|-----------|-----|
-| *INSER«√O*|Linear|Linear|Constante|
+| *REMO√á√ÉO* | ------|-----------|-----|
+| *INSER√á√ÉO*|Linear|Linear|Constante|
 | *ACESSO*|Constante|Constante|Constante|
 
 Seguindo para as finais do jogo de basquete!! Segue que:
 
-- ALGORTIMO DE REMO«√O
+- ALGORTIMO DE REMO√á√ÉO
 
 ```c++
     void remover(char *v, int *N, int pos){
         if(*N==0){
-            //return -1, o vetor È vazio e n„o tem quem remover
+            //return -1, o vetor √© vazio e n√£o tem quem remover
         }else{
             for(int ii = pos; ii <= N-2; ii++)
                 v[ii] = v[ii+1];
-            *N = *N+1;
+            *N = *N-1;
         }
-        //Minha remoÁ„o no inÌcio È O(n), remoÁ„o na posiÁ„o aleatÛria È O(n) e remoÁ„o no fim È O(1)
+        //Minha remo√ß√£o no in√≠cio √© O(n), remo√ß√£o na posi√ß√£o aleat√≥ria √© O(n) e remo√ß√£o no fim √© O(1)
     }
 
 ```
-Agora sim j· temos as informaÁıes necess·rias para completar a tabelinha!
+Agora sim j√° temos as informa√ß√µes necess√°rias para completar a tabelinha!
 
 
-|  ED VETOR | _INICÕO_ | _ARBITR¡RIA_ | _FIM_ |
+|  ED VETOR | _INIC√çO_ | _ARBITR√ÅRIA_ | _FIM_ |
 | ----| ---------|------------|-----|
-| *REMO«√O* | Linear|Linear|Constante|
-| *INSER«√O*|Linear|Linear|Constante|
+| *REMO√á√ÉO* | Linear|Linear|Constante|
+| *INSER√á√ÉO*|Linear|Linear|Constante|
 | *ACESSO*|Constante|Constante|Constante|
 
-- Com isso, eu consigo implementar um TAD PILHA de forma eficiente? SIM! Pois os fatores correspondem ao que a TAD PILHA necessita. No fim, a inserÁ„o e a remoÁ„o no FIM s„o constantes.
+- Com isso, eu consigo implementar um TAD PILHA de forma eficiente? SIM! Pois os fatores correspondem ao que a TAD PILHA necessita. No fim, a inser√ß√£o e a remo√ß√£o no FIM s√£o constantes.
 
-- E a TAD FILA? AÌ complica. Pois o fator linear se mantÈm na inserÁ„o no inÌcio e na remoÁ„o no inÌcio, aÌ n„o È t„o eficiente. Vamos ver a seguir uma diferente implementaÁ„o do ED VETOR que permite um melhor desenvolvimento para a TAD FILA (buffers por exemplo), a qual possui um melhor custo computacional.
+- E a TAD FILA? A√≠ complica. Pois o fator linear se mant√©m na inser√ß√£o no in√≠cio e na remo√ß√£o no in√≠cio, a√≠ n√£o √© t√£o eficiente. Vamos ver a seguir uma diferente implementa√ß√£o do ED VETOR que permite um melhor desenvolvimento para a TAD FILA (buffers por exemplo), a qual possui um melhor custo computacional.
 
 Como resolver este problema?....Vejamos outro conceito de vetores que podemos implementar.
 
-Imagine um vetor de 4 elementos, em uma implementaÁ„o como as que fizemos anteriormente, para o TAD SEQU NCIA FILA, terÌamos que a inserÁ„o/remoÁ„o no inÌcio È linear, ou seja, O(N). Pois, todos os elementos devem ser deslocados para que a(s) operaÁıes ocorram. SÛ que, e se eu conseguisse inserir antes do indÌce 0? E se eu conseguir deixar arbitr·ria a minha posiÁ„o de inÌcio do vetor? Isso implicaria que a minha remoÁ„o tambÈm seria mais simples. Vejamos a serguinte estrutura de dados salvadora da implementaÁ„o mais f·cil do TAD FILA....(>tambores por favor<)
+Imagine um vetor de 4 elementos, em uma implementa√ß√£o como as que fizemos anteriormente, para o TAD SEQU√äNCIA FILA, ter√≠amos que a inser√ß√£o/remo√ß√£o no in√≠cio √© linear, ou seja, O(N). Pois, todos os elementos devem ser deslocados para que a(s) opera√ß√µes ocorram. S√≥ que, e se eu conseguisse inserir antes do ind√≠ce 0? E se eu conseguir deixar arbitr√°ria a minha posi√ß√£o de in√≠cio do vetor? Isso implicaria que a minha remo√ß√£o tamb√©m seria mais simples. Vejamos a serguinte estrutura de dados salvadora da implementa√ß√£o mais f√°cil do TAD FILA....(>tambores por favor<)
 
 <br>
 <p align='center'>
 <strong>ED VETOR CIRCULAR</strong>
 </p>
-E se fosse como o jogo da cobrinha? Se eu tivesse um espaÁo infinito!! Posso adicionar de um lado, remover do outro...E quando a cobrinha bate na parede? Ela aparece do outro lado, como um PORTAL (quase stranger things isso aqui). Assim, podemos usar esse conceito para montar nosso ED VETOR CIRCULAR.
+E se fosse como o jogo da cobrinha? Se eu tivesse um espa√ßo infinito!! Posso adicionar de um lado, remover do outro...E quando a cobrinha bate na parede? Ela aparece do outro lado, como um PORTAL (quase stranger things isso aqui). Assim, podemos usar esse conceito para montar nosso ED VETOR CIRCULAR.
 
-   -   Como se o fim do vetor fosse mapeado para o seu inÌcio!! Assim posso inserir/remover elementos no inÌcio e/ou no fim SEM DESLOCAR NADA!! Massa n„o È? Acredito que acabamos de economizar muitos espaÁos de memÛria, e seu processador deve estar te agradecendo...:)
+   -   Como se o fim do vetor fosse mapeado para o seu in√≠cio!! Assim posso inserir/remover elementos no in√≠cio e/ou no fim SEM DESLOCAR NADA!! Massa n√£o √©? Acredito que acabamos de economizar muitos espa√ßos de mem√≥ria, e seu processador deve estar te agradecendo...:)
 
 Agora, como podemos programar o nosso PORTAL PARA O MUNDO INVERTIDO no nosso vetor?
 
-Existe um operador chamado mod(%), que serve exatamente para cortar as nossas sequÍncias em ordens de multÌplos do n˙mero pÛs %. Ou seja, se fosse N%4, o N seria dividido em grupos de 4 elementos. O mod È um operador matem·tico de resto, ent„o seus Ìndices s„o: {0,1,2,3}.
+Existe um operador chamado mod(%), que serve exatamente para cortar as nossas sequ√™ncias em ordens de mult√≠plos do n√∫mero p√≥s %. Ou seja, se fosse N%4, o N seria dividido em grupos de 4 elementos. O mod √© um operador matem√°tico de resto, ent√£o seus √≠ndices s√£o: {0,1,2,3}.
 
-Segue o cÛdigo de INSER«√O:
+Segue o c√≥digo de INSER√á√ÉO:
 ```c++
     void inserir_inicio(char *v, int *N, int *B, int el){
         if(*N==Nmax){
-            //return -1, pois n„o sabe mais nada, È maior do que o tamanho do vetor
+            //return -1, pois n√£o sabe mais nada, √© maior do que o tamanho do vetor
         }else{
             *B = (*B-1)%Nmax; //!Representa o PORTAL
             v[*B] = el;
-            *N++; //!Aumenta mais um no n˙mero de elementos que est„o contidos no vetor
+            *N++; //!Aumenta mais um no n√∫mero de elementos que est√£o contidos no vetor
         } //O(1)
     }
 ```
@@ -165,11 +165,11 @@ Segue o cÛdigo de INSER«√O:
 ```c++
     void inserir_fim(char *v, int *N, int *B, int Nmax, char el){
         if(*N==Nmax){
-            //return -1, pois n„o sabe mais nada, È maior do que o tamanho do vetor
+            //return -1, pois n√£o sabe mais nada, √© maior do que o tamanho do vetor
         }else{
-            *V[(*N+*B)%Nmax] = el; //! Meu portal para inserÁ„o no fim
+            *V[(*N+*B)%Nmax] = el; //! Meu portal para inser√ß√£o no fim
             v[*B] = el;
-            *N++; //!Aumenta mais um no n˙mero de elementos que est„o contidos no vetor
+            *N++; //!Aumenta mais um no n√∫mero de elementos que est√£o contidos no vetor
         } //O(1)
     }
 ```
@@ -181,15 +181,15 @@ Segue o cÛdigo de INSER«√O:
     }
 ```
 
-- ALGORITMO DE REMO«√O
+- ALGORITMO DE REMO√á√ÉO
 
 ```c++
     void remocao_inicio(char *v, int *N, int *B, int Nmax){
         if(*N==0){
-            //return -1, n„o tem ninguÈm no vetor
+            //return -1, n√£o tem ningu√©m no vetor
         }else{
             *B = (*B+1)%Nmax;
-            *N--; //!Neste caso, na teoria se desconsidera a posiÁ„o ali do lado, mas na pr·tica o lixo e restos ainda est„o l·. Se fosse em uma ·rea de seguranÁa, seria mais sugerido tratar esse campo com mais sutileza e cuidado.
+            *N--; //!Neste caso, na teoria se desconsidera a posi√ß√£o ali do lado, mas na pr√°tica o lixo e restos ainda est√£o l√°. Se fosse em uma √°rea de seguran√ßa, seria mais sugerido tratar esse campo com mais sutileza e cuidado.
         }//Custo Computacional: O(1)
     }
 ```
@@ -197,19 +197,19 @@ Segue o cÛdigo de INSER«√O:
 ```c++
     void remocao_fim(char *v, int *N, int *N, int Nmax){
         if(*N==0){
-            //return -1, n„o tem ninguÈm no vetor
+            //return -1, n√£o tem ningu√©m no vetor
         }else{
-            *N--; //Apenas d· um pop_back na ˙ltima posiÁ„o o vetor
+            *N--; //Apenas d√° um pop_back na √∫ltima posi√ß√£o o vetor
         }
     }
 ```
 
-Agora, apÛs essa explanaÁ„o, perceba que:
+Agora, ap√≥s essa explana√ß√£o, perceba que:
 
-|  ED VETOR CIRCULAR | _INICÕO_ | _ARBITR¡RIA_ | _FIM_ |
+|  ED VETOR CIRCULAR | _INIC√çO_ | _ARBITR√ÅRIA_ | _FIM_ |
 | ----| ---------|------------|-----|
-| *REMO«√O* | Constante|Linear|Constante|
-| *INSER«√O*|Constante|Linear|Constante|
+| *REMO√á√ÉO* | Constante|Linear|Constante|
+| *INSER√á√ÉO*|Constante|Linear|Constante|
 | *ACESSO*|Constante|Constante|Constante|
 
-Ent„o, com a TAD SEQU NCIA PILHA agora tenho mais uma opÁ„o!! Posso implementar a remoÁ„o e inserÁ„o no INÕCIO TAMB…M!! ^^ E com a TAD SEQU NCIA FILA, consigo implementar a inserÁ„o e remoÁ„o no inÌcio e no fim de forma constante!! Facilita nossas contas e o custo computacional.
+Ent√£o, com a TAD SEQU√äNCIA PILHA agora tenho mais uma op√ß√£o!! Posso implementar a remo√ß√£o e inser√ß√£o no IN√çCIO TAMB√âM!! ^^ E com a TAD SEQU√äNCIA FILA, consigo implementar a inser√ß√£o e remo√ß√£o no in√≠cio e no fim de forma constante!! Facilita nossas contas e o custo computacional.
