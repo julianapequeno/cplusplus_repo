@@ -1,5 +1,9 @@
 #include "../include/BOT_mestre_de_mesa.hpp"
 
+void BOT_mestre_de_mesa::clear(){
+  std::cout<< "\033[2J\033[1;1H";
+}
+
 std::minstd_rand BOT_mestre_de_mesa::rnd = std::minstd_rand();
 
 BOT_mestre_de_mesa::BOT_mestre_de_mesa(){
@@ -8,9 +12,9 @@ BOT_mestre_de_mesa::BOT_mestre_de_mesa(){
 
 void BOT_mestre_de_mesa::setter_jogadores_and_BOT(Personagem *p){
     if(this->m_jogadores_na_partida > 13){ /*Considera o jogador escolh*/
-        std::cout << "Existem muitos jogadores. Lembre-se que atualmente só pode-se jogar no máximo 13, contando com o usuário" << std::endl;
+        std::cout << ANSI_COLOR_RED << "Existem muitos jogadores. Lembre-se que atualmente só pode-se jogar no máximo 13, contando com o usuário" << ANSI_COLOR_RESET << std::endl;
     }else if(this->m_jogadores_na_partida == 1){
-        std::cout << "No mínimo, ponha outro jogador para jogar com você! Jogar sozinho é tão chato :/" << std::endl;
+        std::cout << ANSI_COLOR_RED << "No mínimo, ponha outro jogador para jogar com você! Jogar sozinho é tão chato :/" << ANSI_COLOR_RESET << std::endl;
     }else{
         int a = 0;
         std::vector<std::string> nomes_temp;
@@ -26,8 +30,9 @@ void BOT_mestre_de_mesa::setter_jogadores_and_BOT(Personagem *p){
             this->m_personagens.push_back(p1);
             a++;
         }
-        std::cout << "Jogadores escalados! Bom jogo :)" << std::endl;
-        std::cout << "--------------------------------------------" << std::endl;
+        std::cout << ANSI_COLOR_GREEN << "Jogadores escalados! Bom jogo :)" << ANSI_COLOR_RESET << std::endl;
+        std::cout <<  "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯"  << std::endl;
+        std::cout << std::endl;
     }
 }
 
@@ -83,11 +88,27 @@ void BOT_mestre_de_mesa::escolha_personagem_jogador(Personagem *p){
     std::cin >> escolha;
     if(escolha == 13){ 
         std::string personagem_criado;
-        std::cout << "Certo! Preparando o ambiente para que você crie o seu próprio personagem!" << std::endl;
-        std::cout << "------------------------------------------------------------------------------" << std::endl;
+        std::cout << ANSI_COLOR_GREEN << "Certo! Preparando o ambiente para que você crie o seu próprio personagem!" << ANSI_COLOR_RESET << std::endl;
+        std::cout <<  "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯"  << std::endl;
+            std::cout << std::endl;
+        this->clear();
         std::cout << "Vamos lá! Qual será nome do seu personagem? ";
         std::cin >> personagem_criado;
         p->set_nome(personagem_criado);
+    }else{
+        dados.open("../include/personagens.txt",std::ios::out |std::ios::in);
+        std::string leitura_linha;
+        i = 1;
+        while(getline(dados, leitura_linha)){
+            //Perder um ano de faculdade não é o fim do mundo
+            //Não existe faculdade, não existe casa, não existe escola, existe campo missionário
+            //Conte o que mudou a sua vida. Viva e conte que vc vive por um propósito maior. Não desista, no tempo certo DEus vai honrar e vai realizar os PLANOS DELE na e por meio da tua vida.
+            if(i==escolha){
+                p->set_nome(leitura_linha);
+            }
+            i++;
+        }
+
     }
 }
 

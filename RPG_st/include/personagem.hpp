@@ -14,7 +14,6 @@ class Personagem{
         Personagem();
         /**
          * @brief Método que iniciliza a ficha do personagem.
-         * 
          */
         void inicializa_ficha();
         /**
@@ -28,6 +27,15 @@ class Personagem{
          * @return , uma string com o valor de m_nome 
          */
         std::string get_nome();
+        /**
+         * @brief Método para deletar variáveis dinâmicas
+         * 
+         */
+        void deletar_ficha();
+        /**
+         * @brief Método que retorna o atributo ficha_dados_personagem
+         */
+        Ficha_Personagem* get_ficha_personagem();
 };
 
 #endif
