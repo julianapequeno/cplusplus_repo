@@ -1,3 +1,0 @@
-Resultado A add B
-3 3
-3 4
