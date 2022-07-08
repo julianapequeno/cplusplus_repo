@@ -195,3 +195,110 @@ __QUESTÕES DE HIERARQUIA DE MEMÓRIA__
     de volta na memória quando a cache precisar se livrar dele, quando ele for substituído. Economizo em escritas (menos, pois só vai para a memória principal no final de tudo). Problema: Há uma inconsistência entre as duas memórias.
       - Servidores, sistemas embarcados
       - Consome menos largura de banda
+
+<br>
+<div align="center">
+ 
+ # __MEMÓRIA VIRTUAL__
+
+ </div>
+
+Vamos falar sobre a _relação entre a memória principal e a memória secundária_. A memória secundária NÃO É VOLÁTIL.
+
+Os dados precisam primeiro estar na memória principal para ser acessado pelo processador!! Apenas o S.O. pode acessar o disco :)
+
+Ou seja, uma aplicação __precisa__ estar na memória principal.
+
+> Como gerenciar a memória de forma que todas as aplicações e dados estejam na memória principal? 
+
+- Como garantir que ela possui um tamanho que caiba tudo isso?
+<div align="center">
+
+__PRINCÍPIOS__
+</div>
+
+1. __Memória deve ser particionada__.<br>
+   Dividir a memória principal em __partições__. Cada partição gerencia uma aplicação ou o S.O.
+
+   - Partições de tamanho fixo: não variam, mas são do mesmo tamanho OU não variam, mas são de tamanhos diferentes.
+
+     - Fragmentação interna: Desperdício, como restos de partições. Se a aplicação não ocupar totalmente o tamanho da partição. Desperdício de espaço.
+  
+  - Partição de tamanho variável: Se adaptam a o que é requisitado. Elas são do tamanho que a aplicação existe.
+    - Fragmentação externa: Como elas são alocadas e saem, abrindo novos espaços para entradas, eles podem gerar espaços minísculos entre duas ou mais aplicações onde NENHUMA OUTRA PARTIÇÃO poderia entrar. 
+        - Ideia para resolver: compactação; Juntar elas mais ainda. Isso causa: lentidão do sistema, energia...
+        - Pior caso: tenho espaço disponível mas não consigo colocar a partição com o espaço pois o espaço livre não está sequencial. Resolução: Compactação.
+  
+  Assim, nem sempre o programa estará na mesma posição de memória. Por isso não podemos referenciar endereços fixos.
+
+2. __Referenciando por endereços lógicos__.<br>
+  Tipo: onde quer que tenha sido alocado +(300), por exemplo.
+  - Endereço LÓGICO: relativo ao início da memória
+  - Endereço FÍSICO: local físico na memória principal.
+
+3. __PARTICIONAR DE FORMA A EVITAR DESPERDÍCIOS__. <br>
+  Solução: Dividir em espaços menores de tamanho fixo -> _frames_
+  
+    Dividir a aplicação em pedaços de mesmo tamanho, _páginas_.
+    - Não precisam estar em lugares contíguos (em sequência)
+    - Espaço igual para todos. Então sempre terá um espaço que caiba uma página (caso esteja vazio).
+
+    Tabela de página da aplicação - índice que indicam onde estão as páginas na ordem, cada frame onde se encontram cada uma das páginas da aplicação.
+
+    Cada página só é trazida quando necessário. <br>
+    - page fault : preciso de uma página que não está na memória, resulta em uma busca do disco.
+    - consigo mapear mais aplicações na memória.
+    - páginas não usadas podem voltar para o disco.
+    - substituição de páginas: quando não tenho mais espaço e preciso liberar.
+    - _thrashing_ : quando tem muita falta de página.
+
+    (similaridades com o modelo da cache)
+    
+<br>
+<div align="center">
+
+__M E M Ó R I A    <br> V I R T U A L__
+</div>
+- Dá ao programar a aparência de uma memória IMENSA. Pois a troca de páginas é invisível, ou seja, parece que a memória é infinita.
+
+Memória Virtual - conceito: Técnica que dá ao programador a ilusão de poder acessar o espaço de memória em disco de forma rápida.
+-   Permite uma forma segura e eficiente de acessar os dados do computador, além de compartilhá-los.
+- Aqui entrar o conceito de usar mais de um S.O. (dual boot), ter vários usuários... 
+
+- A técnica de memória virtual consegue fazer a TRADUÇÃO de modo que o programa seja compilado onde quer que esteja na memória FÍSICA. Pois, há uma memória LÓGICA que ajuda a realizar isso (ex: v.begin()+300...MEMÓRIA LÓGICA).
+
+
+__FUNCIONAMENTO__
+
+Não existe uma sequencialidade na memória com as páginas de uma aplicação.
+
+A trânsferência entre memória e disco ocorre em PÁGINAS.
+
+O tamanho da página é grande pois o acesso ao disco é um ALTO CUSTO.
+
+_tradeoff_ - compromisso no tamanho das páginas na memória virtual, é similar ao tradeoff no aumento dos blocos na memória cache. Tudo para diminuir esse acesso O(n) às memórias mais baixas.
+
+__TRADUÇÃO__
+
+Pode ser que dê um _page fault_, aí tem que haver uma transferência do disco para a memória.
+
+Feito em conjunto pelo hardware e pelo Sistema Operacional (SO).
+
+O S.O. tem as informações a respeito dessas páginas na memória principal.
+- Deslocamento dentro da página: O processador só está interessado em UMA PALAVRA dentro da PÁGINA. Representado pelos bits menos significativos. Ex: 0000001, 000000002....Aí, isso aqui não é traduzido, apenas o número da página física para o número da página virtual.
+
+> O processador e a memória cache lidam com endereço virtual (8 bits), mas não sabem disso.
+
+Quando essa solicitação chega na memória principal caí a ficha de realidade, a __memória principal FAZ A TRADUÇÃO__.
+
+A memória física tem 64 endereços, mas a memória virtual finge ter 256 (exemplo em escala menor).
+
+Para realizar a tradução, o sistema de memória virtual conta com uma tabela de tradução.
+
+__TABELA DE TRADUÇÃO__
+o endereço virtual (8 bits) possui 4 bits apenas para dizer a página. -> 16(palavras)*16(palavras) = 256 endereços!! (Pois são duas vezes 4bits -> 8 bits) 
+O endereço física (6 bits): 4 bits são usados para identificar a palavra na pagina, 2 bits é o resto. -> 4(páginas)*16(plavras) = 64 endereços!!
+
+A falha de página, o chute errado de qual página está a palavra, custa MUUITO aqui. Por isso se deve tomar cuidado com a escolha da página, substituição de página, etc.
+
+_Write-through_ não funciona para a memória virtual.
