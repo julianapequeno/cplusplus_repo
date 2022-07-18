@@ -56,7 +56,7 @@ Mais abaixo na pirâmide: Maior o TEMPO DE ACESSO (ou seja, mais lento) e Maior 
 
 - __Hierarquia Inclusiva__: Tudo o que está dentro do registrador está dentro da cache, tudo o que está dentro da cache, está na principal, e tudo o que está na principal está no disco. Ou seja, são sub-conjuntos uma da outra, baseado na ordem de hierarquia.
 
-   - Os discos rígidos e as memórias principais são os únicos NÃO VOLÁTEIS. Assim, para acessar, os dados vão sendo copiados até chegar aos registrados e aos usuários.
+   - Os discos rígidos são os únicos NÃO VOLÁTEIS. Assim, para acessar, os dados vão sendo copiados até chegar aos registrados e aos usuários.
 
   - A memória principal pode ser acessada pelo processador.
   - A memória secundária não pode ser acessada diretamente! O dado DEVE PASSAR PELA MEMÓRIA PRINCIPAL para poder ser lido/escrito na memória secundária.
