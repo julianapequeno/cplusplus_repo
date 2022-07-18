@@ -10,7 +10,8 @@ Sumário
 5. [CACHE - Decisões de Projeto](#decisões-de-projeto)
 6. [QUESTÕES DE HIERARQUIA DE MEMÓRIA](#questões-de-hierarquia-de-memória)
 7. [Memória Virtual](#memória-virtual)
-8. [Entrada e Saída (próxima página)](ES.md)
+8. [Entrada e Saída (outra página)](ES.md)
+9. [Barramentos (outra página)](Barramentos.md)
 
 
 #### __Mémoria__  é um lugar para o armazenamento de informações, e suas únicas ações são: leitura e escrita.
